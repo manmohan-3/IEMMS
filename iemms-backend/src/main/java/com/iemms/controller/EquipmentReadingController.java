@@ -15,6 +15,8 @@ import com.iemms.dto.EquipmentReadingRequestDto;
 import com.iemms.entity.EquipmentReading;
 import com.iemms.service.EquipmentReadingService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/equipment/{equipmentId}/readings")
 public class EquipmentReadingController {
@@ -23,7 +25,7 @@ public class EquipmentReadingController {
 		this.equipmentReadingService=equipmentReadingService;
 	}
 	@PostMapping
-	public EquipmentReading saveEquipmentReading(@PathVariable Long equipmentId, @RequestBody EquipmentReadingRequestDto dto) {
+	public EquipmentReading saveEquipmentReading(@PathVariable Long equipmentId, @RequestBody @Valid EquipmentReadingRequestDto dto) {
 		return equipmentReadingService.saveEquipmentReading(equipmentId, dto);
 	}
 	@GetMapping

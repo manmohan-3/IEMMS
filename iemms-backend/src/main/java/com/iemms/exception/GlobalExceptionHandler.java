@@ -30,6 +30,7 @@ public class GlobalExceptionHandler {
 	}
 	@ExceptionHandler(IllegalArgumentException.class)
 	public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex){
+		ex.printStackTrace();
 		return ResponseEntity.badRequest().body(ex.getMessage());
 	}
 

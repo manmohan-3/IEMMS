@@ -18,7 +18,9 @@ import com.iemms.repository.EquipmentReadingRepository;
 public class EquipmentReadingService {
 	private final EquipmentReadingRepository equipmentReadingRepository;
 	private final EquipmentRepository equipmentRepository;
-	public EquipmentReadingService(EquipmentReadingRepository equipmentReadingRepository,EquipmentRepository equipmentRepository) {
+	private final AlertService alertService;
+	public EquipmentReadingService(EquipmentReadingRepository equipmentReadingRepository,EquipmentRepository equipmentRepository,AlertService alertService) {
+		this.alertService=alertService;
 		this.equipmentRepository=equipmentRepository;
 		this.equipmentReadingRepository=equipmentReadingRepository;
 	}
@@ -33,7 +35,9 @@ public class EquipmentReadingService {
 		equipmentReading.setVibration(dto.getVibration());
 		equipmentReading.setPowerFactor(dto.getPowerFactor());
 		equipmentReading.setReadingTime(LocalDateTime.now());
-		return equipmentReadingRepository.save(equipmentReading);
+		EquipmentReading savedReading=equipmentReadingRepository.save(equipmentReading);
+		alertService.generateAlert(savedReading);
+		return savedReading;
 	}
 	public List<EquipmentReading> getEquipmentReadingById(Long equipmentId) {
 		equipmentRepository.findById(equipmentId).orElseThrow(() -> new EquipmentNotFoundException("Equipment with ID " + equipmentId + " not found"));

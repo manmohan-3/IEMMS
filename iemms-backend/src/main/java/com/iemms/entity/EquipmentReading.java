@@ -22,15 +22,18 @@ public class EquipmentReading {
 	@JoinColumn(name="equipment_id")
 	private Equipment equipment;
 	
-	private double temperature;
-	private double voltage;
-	private double current;
-	private double vibration;
-	private double powerFactor;
+	private Double temperature;
+	private Double voltage;
+	private Double current;
+	private Double vibration;
+	private Double powerFactor;
 	private LocalDateTime readingTime;
 	
 	public EquipmentReading() {
 		
+	}
+	public Long getId() {
+		return Id;
 	}
 	public void setEquipment(Equipment equipment) {
 		this.equipment=equipment;
@@ -38,34 +41,34 @@ public class EquipmentReading {
 	public Equipment getEquipment() {
 		return equipment;
 	}
-	public void setTemperature(double temperature) {
+	public void setTemperature(Double temperature) {
 		this.temperature=temperature;
 	}
-	public double getTemperature() {
+	public Double getTemperature() {
 		return temperature;
 	}
-	public void setVoltage(double voltage) {
+	public void setVoltage(Double voltage) {
 		this.voltage=voltage;
 	}
-	public double getVoltage() {
+	public Double getVoltage() {
 		return voltage;
 	}
-	public void setCurrent(double current) {
+	public void setCurrent(Double current) {
 		this.current=current;
 	}
-	public double getCurrent() {
+	public Double getCurrent() {
 		return current;
 	}
-	public void setVibration(double vibration) {
+	public void setVibration(Double vibration) {
 		this.vibration=vibration;
 	}
-	public double getVibration() {
+	public Double getVibration() {
 		return vibration;
 	}
-	public void setPowerFactor(double powerFactor) {
+	public void setPowerFactor(Double powerFactor) {
 		this.powerFactor=powerFactor;
 	}
-	public double getPowerFactor() {
+	public Double getPowerFactor() {
 		return powerFactor;
 	}
 	public void setReadingTime(LocalDateTime readingTime) {

@@ -65,6 +65,7 @@ public class ThresholdService {
 		if(dto.getWarningLimit()>=dto.getCriticalLimit()) {
 			throw new IllegalArgumentException("Warning limit must be smaller than critical limit");
 		}
+		//check for threshold duplication other than passed threshold...
 		boolean exists=thresholdRepository.existsByEquipmentIdAndParameterAndIdNot(equipmentId,dto.getParameter(), thresholdId);
 		if(exists) {
 			throw new IllegalArgumentException("The parameter "+dto.getParameter()+" already exists for this equipment");

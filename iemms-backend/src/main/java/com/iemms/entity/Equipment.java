@@ -13,7 +13,7 @@ import jakarta.persistence.Id;
 public class Equipment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long Id;
+	private Long Id;
 	
 	private String equipmentCode;
 	private String name;
@@ -28,7 +28,7 @@ public class Equipment {
 	public Equipment() {
 		
 	}
-	public long getId() {
+	public Long getId() {
 		return Id;
 	}
 	public void setEquipmentCode(String equipmentCode) {
