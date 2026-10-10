@@ -110,11 +110,11 @@ public class AlertService {
     	return alerts.stream().map(this::convertToDto).toList();
     }
     private AlertResponseDto convertToDto(Alert alert) { 
-    	 System.out.println("DEBUG: Alert ID = " + alert.getId());
-
-    	 System.out.println("DEBUG: Equipment = " + alert.getEquipment());
-
-    	 System.out.println("DEBUG: Reading = " + alert.getEquipmentReading());
+//    	 System.out.println("DEBUG: Alert ID = " + alert.getId());
+//
+//    	 System.out.println("DEBUG: Equipment = " + alert.getEquipment());
+//
+//    	 System.out.println("DEBUG: Reading = " + alert.getEquipmentReading());
 
     	AlertResponseDto dto = new AlertResponseDto(); 
     	dto.setId(alert.getId());
