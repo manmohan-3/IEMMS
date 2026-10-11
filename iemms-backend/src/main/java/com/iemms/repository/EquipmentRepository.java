@@ -10,5 +10,5 @@ import com.iemms.entity.Equipment;
 
 @Repository
 public interface EquipmentRepository extends JpaRepository<Equipment,Long> {
-
+	long countByStatus(String status);
 }

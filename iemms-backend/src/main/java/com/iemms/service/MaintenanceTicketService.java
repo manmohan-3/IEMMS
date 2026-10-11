@@ -3,15 +3,22 @@
 
 package com.iemms.service;
 
-import java.time.Year;
 
+import java.time.LocalDateTime;
+import java.time.Year;
+import java.util.List;
+import java.util.UUID;
+
+import org.hibernate.transform.ToListResultTransformer;
 import org.springframework.stereotype.Service;
 
 import com.iemms.repository.MaintenanceTicketRepository;
 import com.iemms.repository.EquipmentRepository;
+import com.iemms.dto.AssignTechnicianRequestDto;
 import com.iemms.dto.MaintenanceTicketRequestDto;
 import com.iemms.dto.MaintenanceTicketResponseDto;
 import com.iemms.entity.Alert;
+import com.iemms.entity.AlertStatus;
 import com.iemms.entity.Equipment;
 import com.iemms.entity.MaintenanceStatus;
 import com.iemms.entity.MaintenanceTicket;
@@ -53,15 +60,16 @@ public class MaintenanceTicketService {
     	ticket.setPriority(dto.getPriority());
     	ticket.setStatus(MaintenanceStatus.OPEN);
     	ticket.setTitle(dto.getTitle());
+    	ticket.setTicketNumber(generateTicketNumber());
     	ticket=maintenanceTicketRepository.save(ticket);
-    	ticket.setTicketNumber(generateTicketNumber(dto.getEquipmentId()));
-    	ticket=maintenanceTicketRepository.save(ticket);
+    	
+//    	ticket=maintenanceTicketRepository.save(ticket);
     	MaintenanceTicketResponseDto maintenanceTicketResponseDto=convertToDto(ticket);
     	
     	return maintenanceTicketResponseDto;
     }
-    private String generateTicketNumber(Long Id) {
-    	return String.format("MT-%d-%04d", Year.now().getValue(), Id);
+    private String generateTicketNumber() {
+        return "MT-" + Year.now().getValue() + "-"+ UUID.randomUUID().toString().substring(0, 8);
     }
     private MaintenanceTicketResponseDto convertToDto(MaintenanceTicket ticket) {
 
@@ -90,4 +98,72 @@ public class MaintenanceTicketService {
 
         return dto;
     }
+    public List<MaintenanceTicketResponseDto> getAllTickets(){
+    	return maintenanceTicketRepository.findAll().stream().map(this::convertToDto).toList();
+    }
+    public MaintenanceTicketResponseDto getTicketById(Long ticketId) {
+    	MaintenanceTicket ticket=maintenanceTicketRepository.findById(ticketId).orElseThrow(()-> new IllegalArgumentException(""
+    			+ "Ticket with ID "+ticketId+" not found"));
+    	
+    	return convertToDto(ticket);
+    }
+    public List<MaintenanceTicketResponseDto> getTicketByEquipmentId(Long equipmentId){
+    	equipmentRepository.findById(equipmentId).orElseThrow(()->new EquipmentNotFoundException("Equipment with ID "+equipmentId+" not found"));
+    	return maintenanceTicketRepository.findByEquipmentId(equipmentId).stream().map(this::convertToDto).toList();
+    }
+    public MaintenanceTicketResponseDto assignTechnician(Long ticketId,AssignTechnicianRequestDto dto) {
+    	MaintenanceTicket ticket=maintenanceTicketRepository.findById(ticketId).orElseThrow(()->new IllegalArgumentException(""
+    			+ "MaintenanceTicket with ID "+ticketId+" not found"));
+    	ticket.setAssignedTechnician(dto.getTechnicianName());
+    	ticket.setStatus(MaintenanceStatus.ASSIGNED);
+    	ticket=maintenanceTicketRepository.save(ticket);
+    	return convertToDto(ticket);
+    }
+    public MaintenanceTicketResponseDto startMaintenance(Long ticketId) {
+    	MaintenanceTicket ticket=maintenanceTicketRepository.findById(ticketId).orElseThrow(()->new IllegalArgumentException(""
+    			+ "MaintenanceTicket With ID "+ticketId+" not found"));
+    	if(ticket.getStatus()!=MaintenanceStatus.ASSIGNED) {
+    		throw new IllegalArgumentException("Only ASSIGNED tickets can be started");
+    	}
+    	ticket.setStatus(MaintenanceStatus.IN_PROGRESS);
+    	ticket=maintenanceTicketRepository.save(ticket);
+    	return convertToDto(ticket);
+    }
+    public MaintenanceTicketResponseDto completeMaintenance(Long ticketId) {
+    	MaintenanceTicket ticket= maintenanceTicketRepository.findById(ticketId).orElseThrow(()->new IllegalArgumentException(""
+    			+ "MaintenanceTicket With ID "+ticketId+" not found"));
+    	if(ticket.getStatus()!=MaintenanceStatus.IN_PROGRESS) {
+    		throw new IllegalArgumentException("Only STARTED tickets can be completed");
+    	}
+    	if(ticket.getAlert()!=null) {
+    		Alert alert=ticket.getAlert();
+    		
+    		alert.setStatus(AlertStatus.RESOLVED);
+    		alertRepository.save(alert);
+    	}
+    	ticket.setStatus(MaintenanceStatus.COMPLETED);
+    	ticket.setCompletedAt(LocalDateTime.now());
+    	ticket=maintenanceTicketRepository.save(ticket);
+    	return convertToDto(ticket);
+    }
+    public MaintenanceTicketResponseDto cancelMaintenance(Long ticketId) {
+    	MaintenanceTicket ticket= maintenanceTicketRepository.findById(ticketId).orElseThrow(()->new IllegalArgumentException(""
+    			+ "MaintenanceTicket With ID "+ticketId+" not found"));
+    	if(ticket.getStatus()==MaintenanceStatus.COMPLETED||ticket.getStatus()==MaintenanceStatus.CANCELLED) {
+    		throw new IllegalArgumentException("COMPLETED or already CANCELLED tickets cannot be cancelled");
+    	}
+    	ticket.setStatus(MaintenanceStatus.CANCELLED);
+    	ticket=maintenanceTicketRepository.save(ticket);
+    	return convertToDto(ticket);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
