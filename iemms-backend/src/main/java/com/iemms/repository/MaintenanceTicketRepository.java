@@ -15,6 +15,7 @@ public interface MaintenanceTicketRepository extends JpaRepository<MaintenanceTi
 	MaintenanceTicket save(MaintenanceTicket ticket);
 	List<MaintenanceTicket> findByEquipmentId(Long equipmentId);
 	long countByStatus(MaintenanceStatus status);
+	long countByAssignedTechnicianIsNotNull();
 	
 
 }

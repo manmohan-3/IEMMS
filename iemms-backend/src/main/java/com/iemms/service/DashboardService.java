@@ -50,7 +50,7 @@ public class DashboardService {
 		MaintenanceDashboardDto dto=new MaintenanceDashboardDto();
 		dto.setTotalTicket(maintenanceRepository.count());
 		dto.setOpenTicket(maintenanceRepository.countByStatus(MaintenanceStatus.OPEN));
-		dto.setAssignedTicket(maintenanceRepository.countByStatus(MaintenanceStatus.ASSIGNED));
+		dto.setAssignedTicket(maintenanceRepository.countByAssignedTechnicianIsNotNull());
 		dto.setInprogressTicket(maintenanceRepository.countByStatus(MaintenanceStatus.IN_PROGRESS));
 		dto.setCompletedTicket(maintenanceRepository.countByStatus(MaintenanceStatus.COMPLETED));
 		dto.setCancelledTicket(maintenanceRepository.countByStatus(MaintenanceStatus.CANCELLED));

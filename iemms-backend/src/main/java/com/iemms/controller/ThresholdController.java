@@ -21,20 +21,24 @@ import com.iemms.service.ThresholdService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/equipment/{equipmentId}/thresholds")
+@RequestMapping("/api/thresholds")
 public class ThresholdController {
 	
 	private ThresholdService thresholdService;
 	public ThresholdController(ThresholdService thresholdService) {
 		this.thresholdService=thresholdService;
 	}
-	@PostMapping
+	@PostMapping("/equipment/{equipmentId}")
 	public Threshold saveThreshold(@PathVariable Long equipmentId, @RequestBody @Valid ThresholdRequestDto dto) {
 //		System.out.println("Controller layer");
 		return thresholdService.saveThreshold(equipmentId, dto);
 		
 	}
 	@GetMapping
+	public List<Threshold> getAllThresholds(){
+		return thresholdService.getAllThresholds();
+	}
+	@GetMapping("/equipment/{equipmentId}")
 	public List<Threshold> getThreshold(@PathVariable Long equipmentId) {
 		return thresholdService.getThreshold(equipmentId);
 	}
@@ -45,6 +49,10 @@ public class ThresholdController {
 	@DeleteMapping("/{thresholdId}")
 	public String deleteThreshold(@PathVariable Long equipmentId,@PathVariable Long thresholdId) {
 		return thresholdService.deleteThreshold(equipmentId, thresholdId);
+	}
+	@GetMapping("/{thresholdId}")
+	public Threshold getThresholdById(@PathVariable Long thresholdId) {
+		return thresholdService.getThresholdById(thresholdId);
 	}
 
 }

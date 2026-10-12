@@ -9,10 +9,12 @@ import java.time.Year;
 import java.util.List;
 import java.util.UUID;
 
-import org.hibernate.transform.ToListResultTransformer;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.iemms.repository.MaintenanceTicketRepository;
+
+
 import com.iemms.repository.EquipmentRepository;
 import com.iemms.dto.AssignTechnicianRequestDto;
 import com.iemms.dto.MaintenanceTicketRequestDto;
@@ -22,7 +24,9 @@ import com.iemms.entity.AlertStatus;
 import com.iemms.entity.Equipment;
 import com.iemms.entity.MaintenanceStatus;
 import com.iemms.entity.MaintenanceTicket;
+import com.iemms.exception.AlertNotFoundException;
 import com.iemms.exception.EquipmentNotFoundException;
+import com.iemms.exception.MaintenanceTicketNotFoundException;
 import com.iemms.repository.AlertRepository;
 
 @Service
@@ -46,7 +50,7 @@ public class MaintenanceTicketService {
     			+dto.getEquipmentId()+" not found"));
     	Alert alert=null;
     	if(dto.getAlertId()!=null) {
-    		alert=alertRepository.findById(dto.getAlertId()).orElseThrow(()->new IllegalArgumentException("Alert with ID "+
+    		alert=alertRepository.findById(dto.getAlertId()).orElseThrow(()->new AlertNotFoundException("Alert with ID "+
     	dto.getAlertId()+" not found"));
     	}
     	if(!alert.getEquipment().getId().equals(equipment.getId())) {
@@ -102,7 +106,7 @@ public class MaintenanceTicketService {
     	return maintenanceTicketRepository.findAll().stream().map(this::convertToDto).toList();
     }
     public MaintenanceTicketResponseDto getTicketById(Long ticketId) {
-    	MaintenanceTicket ticket=maintenanceTicketRepository.findById(ticketId).orElseThrow(()-> new IllegalArgumentException(""
+    	MaintenanceTicket ticket=maintenanceTicketRepository.findById(ticketId).orElseThrow(()-> new MaintenanceTicketNotFoundException(""
     			+ "Ticket with ID "+ticketId+" not found"));
     	
     	return convertToDto(ticket);
@@ -112,7 +116,7 @@ public class MaintenanceTicketService {
     	return maintenanceTicketRepository.findByEquipmentId(equipmentId).stream().map(this::convertToDto).toList();
     }
     public MaintenanceTicketResponseDto assignTechnician(Long ticketId,AssignTechnicianRequestDto dto) {
-    	MaintenanceTicket ticket=maintenanceTicketRepository.findById(ticketId).orElseThrow(()->new IllegalArgumentException(""
+    	MaintenanceTicket ticket=maintenanceTicketRepository.findById(ticketId).orElseThrow(()->new MaintenanceTicketNotFoundException(""
     			+ "MaintenanceTicket with ID "+ticketId+" not found"));
     	ticket.setAssignedTechnician(dto.getTechnicianName());
     	ticket.setStatus(MaintenanceStatus.ASSIGNED);
@@ -120,7 +124,7 @@ public class MaintenanceTicketService {
     	return convertToDto(ticket);
     }
     public MaintenanceTicketResponseDto startMaintenance(Long ticketId) {
-    	MaintenanceTicket ticket=maintenanceTicketRepository.findById(ticketId).orElseThrow(()->new IllegalArgumentException(""
+    	MaintenanceTicket ticket=maintenanceTicketRepository.findById(ticketId).orElseThrow(()->new MaintenanceTicketNotFoundException(""
     			+ "MaintenanceTicket With ID "+ticketId+" not found"));
     	if(ticket.getStatus()!=MaintenanceStatus.ASSIGNED) {
     		throw new IllegalArgumentException("Only ASSIGNED tickets can be started");
@@ -129,8 +133,9 @@ public class MaintenanceTicketService {
     	ticket=maintenanceTicketRepository.save(ticket);
     	return convertToDto(ticket);
     }
+    @Transactional
     public MaintenanceTicketResponseDto completeMaintenance(Long ticketId) {
-    	MaintenanceTicket ticket= maintenanceTicketRepository.findById(ticketId).orElseThrow(()->new IllegalArgumentException(""
+    	MaintenanceTicket ticket= maintenanceTicketRepository.findById(ticketId).orElseThrow(()->new MaintenanceTicketNotFoundException(""
     			+ "MaintenanceTicket With ID "+ticketId+" not found"));
     	if(ticket.getStatus()!=MaintenanceStatus.IN_PROGRESS) {
     		throw new IllegalArgumentException("Only STARTED tickets can be completed");
@@ -147,7 +152,7 @@ public class MaintenanceTicketService {
     	return convertToDto(ticket);
     }
     public MaintenanceTicketResponseDto cancelMaintenance(Long ticketId) {
-    	MaintenanceTicket ticket= maintenanceTicketRepository.findById(ticketId).orElseThrow(()->new IllegalArgumentException(""
+    	MaintenanceTicket ticket= maintenanceTicketRepository.findById(ticketId).orElseThrow(()->new MaintenanceTicketNotFoundException(""
     			+ "MaintenanceTicket With ID "+ticketId+" not found"));
     	if(ticket.getStatus()==MaintenanceStatus.COMPLETED||ticket.getStatus()==MaintenanceStatus.CANCELLED) {
     		throw new IllegalArgumentException("COMPLETED or already CANCELLED tickets cannot be cancelled");

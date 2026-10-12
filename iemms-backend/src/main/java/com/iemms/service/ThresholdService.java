@@ -88,6 +88,16 @@ public class ThresholdService {
 		return "Threshold with Id "+thresholdId+" and for equipmentId "+equipmentId+" successfully removed";
 		
 	}
+	public List<Threshold> getAllThresholds(){
+		List<Threshold> threshold=thresholdRepository.findAll();
+		return threshold;
+		
+	}
+	public Threshold getThresholdById(Long thresholdId) {
+		Threshold threshold=thresholdRepository.findById(thresholdId).orElseThrow(()->new IllegalArgumentException(""
+				+ "Threshold with ID "+thresholdId+" not found"));
+		return threshold;
+	}
 	
 
 }

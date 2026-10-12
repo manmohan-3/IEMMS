@@ -16,6 +16,7 @@ import com.iemms.entity.AlertStatus;
 import com.iemms.entity.EquipmentReading;
 import com.iemms.entity.Threshold;
 import com.iemms.entity.ThresholdParameter;
+import com.iemms.exception.AlertNotFoundException;
 import com.iemms.exception.EquipmentNotFoundException;
 import com.iemms.repository.AlertRepository;
 import com.iemms.repository.EquipmentRepository;
@@ -98,7 +99,7 @@ public class AlertService {
     //Getting by alert Id
     public AlertResponseDto getByAlertId(Long alertId) {
     	
-    	Alert alert=alertRepository.findById(alertId).orElseThrow(()->new IllegalArgumentException("The alert ID"+
+    	Alert alert=alertRepository.findById(alertId).orElseThrow(()->new AlertNotFoundException("The alert ID "+
     	alertId+" is not available"));
     	return convertToDto(alert);
     	
@@ -132,7 +133,7 @@ public class AlertService {
     	}
     public AlertResponseDto acknowledgeAlert(Long alertId) {
     	
-    	Alert alert=alertRepository.findById(alertId).orElseThrow(()->new IllegalArgumentException("Alert with ID"+alertId+" not found"));
+    	Alert alert=alertRepository.findById(alertId).orElseThrow(()->new AlertNotFoundException("Alert with ID "+alertId+" not found"));
     	if(alert.getStatus()==AlertStatus.RESOLVED) {
     		throw new IllegalArgumentException("Resolved alerts cannot be acknowledged ");
     	}
@@ -141,7 +142,7 @@ public class AlertService {
     	return convertToDto(updateAlert);
     }
     public AlertResponseDto resolveAlert(Long alertId) {
-    	Alert alert =alertRepository.findById(alertId).orElseThrow(()->new IllegalArgumentException("Alert with ID "+alertId+" not found"));
+    	Alert alert =alertRepository.findById(alertId).orElseThrow(()->new AlertNotFoundException("Alert with ID "+alertId+" not found"));
     	if(alert.getStatus()!=AlertStatus.ACKNOWLEDGED) {
     		throw new IllegalArgumentException("Only acknowledged alerts will be resolved");
     	}
