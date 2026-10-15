@@ -66,7 +66,7 @@ public class EquipmentRequestDto {
 	public LocalDate getInstallationDate() {
 		return installationDate;
 	}
-	public void getStatus(String status) {
+	public void setStatus(String status) {
 		this.status=status;
 	}
 	public String getStatus() {
