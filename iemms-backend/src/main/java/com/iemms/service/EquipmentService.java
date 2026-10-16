@@ -7,6 +7,10 @@ import com.iemms.repository.EquipmentRepository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +26,13 @@ public class EquipmentService {
 	public Equipment saveEquipment(Equipment equipment) {
 		return equipmentRepository.save(equipment);
 	}
-	public List<Equipment> getAllEquipment(){
-		return equipmentRepository.findAll();
+	public Page<Equipment> getAllEquipment(int page,int size,String sortBy,String direction,String status){
+		Sort sort=direction.equalsIgnoreCase("asc")?Sort.by(sortBy).ascending():Sort.by(sortBy).descending();
+		Pageable pageable=PageRequest.of(page, size,sort);
+		if(status!=null && !status.isBlank()) {
+			return equipmentRepository.findByStatus(status,pageable);
+		}
+		return equipmentRepository.findAll(pageable);
 	}
 	public Equipment getEquipmentById(Long Id){
 		return equipmentRepository.findById(Id).orElseThrow(() -> new EquipmentNotFoundException("Equipment with ID " + Id + " not found"));

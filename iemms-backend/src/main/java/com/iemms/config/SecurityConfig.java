@@ -19,8 +19,9 @@ public class SecurityConfig {
 	
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-		http.authorizeHttpRequests(auth->auth
-				.requestMatchers("/swagger/**","/v3/api-docs/**").permitAll()
+		http.csrf(csrf->csrf.disable())
+				.authorizeHttpRequests(auth->auth
+				.requestMatchers("/swagger-ui/**","/v3/api-docs/**").permitAll()
 				.requestMatchers(org.springframework.http.HttpMethod.POST,"/api/maintenance-tickets").hasRole("ADMIN")
 				.requestMatchers(org.springframework.http.HttpMethod.GET,"/api/maintenance-tickets").hasAnyRole("ADMIN","TECHNICIAN")
 				.requestMatchers(org.springframework.http.HttpMethod.PUT,"/api/maintenance-tickets/*/assign").hasRole("ADMIN")
