@@ -19,12 +19,15 @@ import com.iemms.exception.EquipmentNotFoundException;
 public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Map<String,String>> handleValidationException(MethodArgumentNotValidException ex){
+	public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex){
 		HashMap<String,String> errors=new HashMap<>();
 		ex.getBindingResult().getFieldErrors().forEach(error ->{
 			errors.put(error.getField(),error.getDefaultMessage());
 		});
-		return ResponseEntity.badRequest().body(errors);
+		ErrorResponse errorResponse=new ErrorResponse(HttpStatus.BAD_REQUEST.value(),HttpStatus.BAD_REQUEST.getReasonPhrase(),
+	            "Request validation failed");
+		errorResponse.setValidationErrors(errors);
+		return ResponseEntity.badRequest().body(errorResponse);
 	}
 	@ExceptionHandler(EquipmentNotFoundException.class)
 	public ResponseEntity<ErrorResponse> handleEquipmentNotFoundException(EquipmentNotFoundException ex){

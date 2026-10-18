@@ -46,7 +46,7 @@ public class MaintenanceTicketController {
 	}
 	@GetMapping("/equipment/{equipmentId}")
 	public List<MaintenanceTicketResponseDto> getTicketByEquipmentId(@PathVariable Long equipmentId){
-		return maintenanceTicketService.getAllTickets();
+		return maintenanceTicketService.getTicketByEquipmentId(equipmentId);
 	}
 	@PutMapping("/{ticketId}/assign")
 	public MaintenanceTicketResponseDto assignTechnician(@PathVariable Long ticketId,@Valid @RequestBody AssignTechnicianRequestDto dto) {

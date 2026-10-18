@@ -38,6 +38,10 @@ public class ThresholdController {
 	public List<Threshold> getAllThresholds(){
 		return thresholdService.getAllThresholds();
 	}
+	@GetMapping("/{thresholdId}")
+	public Threshold getThresholdById(@PathVariable Long thresholdId) {
+		return thresholdService.getThresholdById(thresholdId);
+	}
 	@GetMapping("/equipment/{equipmentId}")
 	public List<Threshold> getThreshold(@PathVariable Long equipmentId) {
 		return thresholdService.getThreshold(equipmentId);
@@ -50,9 +54,6 @@ public class ThresholdController {
 	public String deleteThreshold(@PathVariable Long equipmentId,@PathVariable Long thresholdId) {
 		return thresholdService.deleteThreshold(equipmentId, thresholdId);
 	}
-	@GetMapping("/{thresholdId}")
-	public Threshold getThresholdById(@PathVariable Long thresholdId) {
-		return thresholdService.getThresholdById(thresholdId);
-	}
+	
 
 }

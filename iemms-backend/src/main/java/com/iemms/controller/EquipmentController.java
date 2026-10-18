@@ -46,9 +46,9 @@ public class EquipmentController {
 	}
 	@GetMapping
 	public Page<Equipment> getAllEquipment(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "5") int size
-			,@RequestParam(defaultValue = "name") String name,@RequestParam(defaultValue = "desc") String direction,
+			,@RequestParam(defaultValue = "name") String sortBy,@RequestParam(defaultValue = "desc") String direction,
 			@RequestParam(required = false) String status){
-		return equipmentService.getAllEquipment(page,size,name,direction,status);
+		return equipmentService.getAllEquipment(page,size,sortBy,direction,status);
 	}
 	@GetMapping("/{Id}")
 	public Equipment getEquipmentById(@PathVariable Long Id) {

@@ -27,10 +27,31 @@ public class EquipmentService {
 		return equipmentRepository.save(equipment);
 	}
 	public Page<Equipment> getAllEquipment(int page,int size,String sortBy,String direction,String status){
+		if(page<0) {
+			throw new IllegalArgumentException("Page number must be zero or greater than zero");
+		}
+		if(size<=0) {
+			throw new IllegalArgumentException("Page size must be greater then zero");
+		}
+		if(size>100) {
+			throw new IllegalArgumentException("Page size must not exceed 100");
+		}
+		if(!sortBy.equals("name")&&!sortBy.equals("installationDate")) {
+			throw new IllegalArgumentException("Sorting must be done by using name and installationDates");
+		}
+		if(!direction.equalsIgnoreCase("asc")&&!direction.equalsIgnoreCase("desc")) {
+			throw new IllegalArgumentException("Sorting must be done in ascending or descending order");
+		}
+		
 		Sort sort=direction.equalsIgnoreCase("asc")?Sort.by(sortBy).ascending():Sort.by(sortBy).descending();
 		Pageable pageable=PageRequest.of(page, size,sort);
 		if(status!=null && !status.isBlank()) {
+			status=status.trim().toUpperCase(java.util.Locale.ROOT);
+			if(!status.equals("ACTIVE")&&!status.equals("INACTIVE")&&!status.equals("MAINTENANCE")) {
+				throw new IllegalArgumentException("Invalid equipment status.. allowed ACTIVE,INACTIVE,MAINTENANCE");
+			}
 			return equipmentRepository.findByStatus(status,pageable);
+			
 		}
 		return equipmentRepository.findAll(pageable);
 	}

@@ -4,12 +4,14 @@
 package com.iemms.dto;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 public class ErrorResponse {
 	private LocalDateTime timeStamp;
 	private int status;
 	private String error;
 	private String message;
+	private Map<String,String> validationErrors;
 	
 	public ErrorResponse(int status,String error,String message) {
 		this.timeStamp=LocalDateTime.now();
@@ -49,6 +51,12 @@ public class ErrorResponse {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+	public void setValidationErrors(Map<String,String> validationErrors) {
+		this.validationErrors=validationErrors;
+	}
+	public Map<String,String> getValidationErrors(){
+		return validationErrors;
 	}
 	
 }
