@@ -1,0 +1,280 @@
+#root {
+min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+  }
+
+.app-container {
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+background: #f4f7fb;
+color: #172b4d;
+font-family: Inter, "Segoe UI", Arial, sans-serif;
+}
+
+.app-header {
+min-height: 88px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+gap: 20px;
+padding: 18px 7%;
+background: #10243e;
+color: #ffffff;
+}
+
+.brand {
+display: flex;
+align-items: center;
+gap: 13px;
+}
+
+.brand-icon {
+width: 46px;
+height: 46px;
+display: grid;
+place-items: center;
+border-radius: 12px;
+background: #2878d0;
+color: #ffffff;
+font-size: 25px;
+font-weight: 800;
+}
+
+.brand h1 {
+margin: 0;
+font-size: 24px;
+letter-spacing: 1px;
+}
+
+.brand span {
+display: block;
+margin-top: 4px;
+color: #b8c7dc;
+font-size: 12px;
+}
+
+.system-status {
+display: flex;
+align-items: center;
+gap: 9px;
+color: #d7e2ef;
+font-size: 13px;
+}
+
+.status-dot {
+width: 8px;
+height: 8px;
+border-radius: 50%;
+background: #43d19e;
+}
+
+.login-main {
+width: min(1120px, 88%);
+flex: 1;
+display: grid;
+grid-template-columns: 1fr 420px;
+align-items: center;
+gap: 90px;
+margin: 0 auto;
+padding: 70px 0;
+}
+
+.login-intro {
+max-width: 530px;
+}
+
+.eyebrow {
+color: #2878d0;
+font-size: 12px;
+font-weight: 800;
+letter-spacing: 2px;
+}
+
+.login-intro h2 {
+margin: 20px 0;
+color: #10243e;
+font-size: clamp(36px, 4vw, 54px);
+line-height: 1.15;
+letter-spacing: -1.5px;
+}
+
+.login-intro > p {
+max-width: 480px;
+color: #65758b;
+font-size: 16px;
+line-height: 1.8;
+}
+
+.feature-list {
+display: grid;
+gap: 18px;
+margin-top: 34px;
+}
+
+.feature-item {
+display: flex;
+align-items: center;
+gap: 12px;
+color: #344760;
+font-size: 14px;
+}
+
+.feature-check {
+width: 24px;
+height: 24px;
+display: grid;
+place-items: center;
+border-radius: 50%;
+background: #e0f5ec;
+color: #16865c;
+font-weight: 700;
+}
+
+.login-container {
+width: 100%;
+}
+
+.login-card {
+width: 100%;
+padding: 38px 32px;
+border: 1px solid #e5eaf1;
+border-radius: 16px;
+background: #ffffff;
+box-shadow: 0 16px 45px rgba(16, 36, 62, 0.09);
+}
+
+.login-card h2 {
+margin: 0 0 10px;
+color: #10243e;
+font-size: 26px;
+}
+
+.login-card > p {
+margin: 0 0 30px;
+color: #758399;
+font-size: 14px;
+line-height: 1.6;
+}
+
+.form-group {
+display: flex;
+flex-direction: column;
+gap: 9px;
+margin-bottom: 22px;
+}
+
+.form-group label {
+color: #344760;
+font-size: 13px;
+font-weight: 700;
+}
+
+.form-group input {
+width: 100%;
+min-height: 48px;
+padding: 13px 14px;
+border: 1px solid #d8e0eb;
+border-radius: 8px;
+background: #ffffff;
+color: #172b4d;
+font-size: 14px;
+transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input::placeholder {
+color: #a1adbd;
+}
+
+.form-group input:focus {
+outline: none;
+border-color: #2878d0;
+box-shadow: 0 0 0 3px rgba(40, 120, 208, 0.12);
+}
+
+.login-card .login-button {
+width: 100%;
+min-height: 48px;
+margin-top: 6px;
+border: none;
+border-radius: 8px;
+background: #216fc1;
+color: #ffffff;
+font-size: 15px;
+font-weight: 700;
+cursor: pointer;
+transition: background 0.2s, transform 0.2s;
+}
+
+.login-card .login-button:hover {
+background: #185ba1;
+}
+
+.login-card .login-button:active {
+transform: translateY(1px);
+}
+
+.app-footer {
+display: flex;
+justify-content: space-between;
+gap: 20px;
+padding: 22px 7%;
+border-top: 1px solid #e4eaf2;
+background: #ffffff;
+color: #758399;
+font-size: 12px;
+}
+
+@media (max-width: 900px) {
+.login-main {
+grid-template-columns: 1fr;
+gap: 40px;
+max-width: 480px;
+padding: 50px 0;
+}
+
+.login-intro {
+text-align: center;
+}
+
+.login-intro > p {
+margin-right: auto;
+margin-left: auto;
+}
+
+.feature-list {
+text-align: left;
+}
+}
+
+@media (max-width: 600px) {
+.app-header {
+padding: 16px 5%;
+}
+
+.system-status {
+display: none;
+}
+
+.login-main {
+width: 90%;
+padding: 36px 0;
+}
+
+.login-intro h2 {
+font-size: 36px;
+}
+
+.login-card {
+padding: 30px 22px;
+}
+
+.app-footer {
+flex-direction: column;
+align-items: center;
+text-align: center;
+}
+}

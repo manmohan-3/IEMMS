@@ -4,6 +4,7 @@
 package com.iemms.security;
 
 import com.iemms.exception.GlobalExceptionHandler;
+import com.iemms.exception.UserNotFoundException;
 
 import io.jsonwebtoken.JwtException;
 
@@ -41,8 +42,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 		final String token=authorizationHeader.substring(7);
 		try {
 			String username=jwtService.extractUsername(token);
-			if(username!=null || SecurityContextHolder.getContext().getAuthentication()==null ) {
+			if(username!=null && SecurityContextHolder.getContext().getAuthentication()==null ) {
 				UserDetails userDetails=userDetailsService.loadUserByUsername(username);
+//				System.out.println(userDetails.isEnabled());
 				if(userDetails.isEnabled() && jwtService.isTokenValid(token, username)) {
 					UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
 					usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
@@ -50,7 +52,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 					
 				}
 			}
-		} catch (JwtException | IllegalArgumentException exception) {
+		} catch (JwtException | IllegalArgumentException | UserNotFoundException exception) {
             SecurityContextHolder.clearContext();
 		}
 		filterChain.doFilter(request, response);
