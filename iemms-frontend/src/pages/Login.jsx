@@ -10,9 +10,9 @@ function Login(){
         try{
             const response= await api.post("/auth/login",{username,password});
             const data=response.data;
+            sessionStorage.setItem("token",data.token);
+            sessionStorage.setItem("tokenType",data.tokenType);
             console.log("Login success");
-            console.log("Token type:", data.tokenType); 
-            console.log("Token expiry:", data.expiresIn);
         }
         catch(error){
             if (error.response) {
