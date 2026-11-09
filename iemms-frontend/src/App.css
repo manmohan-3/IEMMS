@@ -278,3 +278,155 @@ align-items: center;
 text-align: center;
 }
 }
+/* =========================================
+   AUTHENTICATED APPLICATION LAYOUT
+========================================= */
+
+.authenticated-layout {
+    min-height: 100vh;
+    width: 100%;
+    background: #071426;
+}
+/* =========================================
+   MAIN CONTENT LAYOUT
+========================================= */
+
+.main-content {
+    margin-left: 255px;
+    width: calc(100% - 255px);
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* TOP NAVBAR */
+
+.top-navbar {
+    min-height: 85px;
+    box-sizing: border-box;
+
+    padding: 15px 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: #101f35;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.top-navbar h2 {
+    color: white;
+    font-size: 21px;
+    margin: 0 0 5px;
+}
+
+.top-navbar > div:first-child span {
+    color: #8da3bd;
+    font-size: 12px;
+}
+
+
+/* NAVBAR RIGHT */
+
+.top-navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    color: #a7f3d0;
+    font-size: 12px;
+}
+
+.top-status-dot {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+    background: #34d399;
+
+    box-shadow: 0 0 10px #34d399;
+}
+
+.user-avatar {
+    width: 38px;
+    height: 38px;
+
+    margin-left: 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: linear-gradient(135deg, #38bdf8, #2563eb);
+
+    color: white;
+    font-weight: 700;
+}
+
+
+/* PAGE CONTENT */
+
+.page-content {
+    flex: 1;
+    min-width: 0;
+    background: #071426;
+}
+
+
+/* COMING SOON */
+
+.coming-soon {
+    margin: 45px;
+    padding: 60px 30px;
+
+    text-align: center;
+
+    background: rgba(255, 255, 255, 0.05);
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+
+    color: white;
+}
+
+.coming-soon p {
+    color: #94a3b8;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 600px) {
+
+    .top-navbar {
+        padding: 15px;
+    }
+
+    .top-navbar-right {
+        gap: 6px;
+    }
+
+    .top-navbar-right > span:not(.top-status-dot) {
+        display: none;
+    }
+
+    .coming-soon {
+        margin: 20px;
+    }
+}
+@media (max-width: 600px) {
+    .sidebar {
+        width: 75px;
+        min-width: 75px;
+    }
+
+    .main-content {
+        margin-left: 75px;
+        width: calc(100% - 75px);
+    }
+}

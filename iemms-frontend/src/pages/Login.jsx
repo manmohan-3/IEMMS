@@ -2,7 +2,7 @@
 
 import {useState} from "react";
 import api from "../services/api";
-function Login(){
+function Login({onLoginSuccess}){
     const [username,setusername]=useState("");
     const [password,setPassword]=useState("");
     async function handleLogin(event){
@@ -12,6 +12,7 @@ function Login(){
             const data=response.data;
             sessionStorage.setItem("token",data.token);
             sessionStorage.setItem("tokenType",data.tokenType);
+            onLoginSuccess();
             console.log("Login success");
         }
         catch(error){

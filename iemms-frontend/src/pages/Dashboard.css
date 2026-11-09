@@ -1,0 +1,410 @@
+/* =========================================
+   IEMMS - INDUSTRIAL CONTROL ROOM THEME
+========================================= */
+
+.dashboard-container {
+    min-height: 100vh;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 42px 50px;
+
+    background:
+        radial-gradient(circle at 10% 10%, #1e3a5f 0%, transparent 35%),
+        radial-gradient(circle at 90% 80%, #172554 0%, transparent 35%),
+        linear-gradient(135deg, #071426, #101f35 55%, #0b1729);
+
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #f8fafc;
+
+    max-width: 1700px;
+    margin: 0 auto;
+}
+
+
+/* =========================================
+   DASHBOARD HEADER
+========================================= */
+
+.dashboard-container h1 {
+    color: #ffffff;
+    font-size: 34px;
+    font-weight: 750;
+    letter-spacing: -1px;
+    margin: 0 0 10px;
+}
+
+.dashboard-subtitle {
+    color: #9fb1c8;
+    font-size: 15px;
+    margin-bottom: 45px;
+}
+
+
+/* =========================================
+   SECTION HEADINGS
+========================================= */
+
+.dashboard-container h2 {
+    display: flex;
+    align-items: center;
+
+    color: #e2e8f0;
+    font-size: 20px;
+    font-weight: 700;
+
+    margin-top: 52px;
+    margin-bottom: 28px;
+
+    padding-left: 15px;
+    border-left: 4px solid #38bdf8;
+}
+
+
+/* =========================================
+   DASHBOARD GRID
+========================================= */
+
+.dashboard-cards {
+    display: grid;
+
+    grid-template-columns: repeat(3, minmax(240px, 300px));
+
+    gap: 30px;
+
+    perspective: 1200px;
+
+    margin-bottom: 48px;
+}
+
+
+/* =========================================
+   BASE CARD DESIGN
+========================================= */
+
+.dashboard-card {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+
+    min-height: 175px;
+    width: 100%;
+
+    box-sizing: border-box;
+    padding: 28px;
+
+    border-radius: 24px 8px 24px 8px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.13),
+            rgba(255, 255, 255, 0.035)
+        );
+
+    border: 1px solid rgba(255, 255, 255, 0.13);
+
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.20),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+    transform-style: preserve-3d;
+
+    transition:
+        transform 0.4s ease,
+        box-shadow 0.4s ease,
+        border-color 0.4s ease;
+
+    cursor: default;
+}
+
+
+/* =========================================
+   DECORATIVE GLOW
+========================================= */
+
+.dashboard-card::before {
+    content: "";
+
+    position: absolute;
+    z-index: -1;
+
+    width: 160px;
+    height: 160px;
+
+    right: -65px;
+    top: -75px;
+
+    border-radius: 50%;
+
+    background: var(--card-glow, rgba(56, 189, 248, 0.15));
+
+    filter: blur(2px);
+
+    transition:
+        transform 0.5s ease,
+        opacity 0.5s ease;
+
+    opacity: 0.75;
+}
+
+
+/* Decorative ring */
+
+.dashboard-card::after {
+    content: "";
+
+    position: absolute;
+    z-index: -1;
+
+    width: 100px;
+    height: 100px;
+
+    right: -35px;
+    bottom: -45px;
+
+    border-radius: 50%;
+
+    border: 1px solid var(--card-accent, #38bdf8);
+
+    opacity: 0.22;
+
+    transition: transform 0.5s ease;
+}
+
+
+/* =========================================
+   UNIQUE 3D HOVER
+========================================= */
+
+.dashboard-card:hover {
+    transform:
+        perspective(1200px)
+        translateY(-12px)
+        rotateX(5deg)
+        rotateY(-5deg)
+        scale(1.025);
+
+    border-color: var(--card-accent, #38bdf8);
+
+    box-shadow:
+        0 25px 45px rgba(0, 0, 0, 0.30),
+        0 0 25px var(--card-glow, rgba(56, 189, 248, 0.15));
+}
+
+.dashboard-card:hover::before {
+    transform: scale(1.45);
+    opacity: 1;
+}
+
+.dashboard-card:hover::after {
+    transform: scale(1.6);
+}
+
+
+/* =========================================
+   CARD TITLES
+========================================= */
+
+.dashboard-card h3 {
+    position: relative;
+    z-index: 1;
+
+    color: #b8c8dc;
+
+    font-size: 13px;
+    font-weight: 650;
+
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    line-height: 1.6;
+
+    margin: 0;
+
+    white-space: normal;
+    overflow-wrap: break-word;
+
+    transition:
+        color 0.3s ease,
+        transform 0.3s ease;
+}
+
+
+/* =========================================
+   CARD NUMBERS
+========================================= */
+
+.dashboard-card p {
+    position: relative;
+    z-index: 1;
+
+    color: #ffffff;
+
+    font-size: 42px;
+    font-weight: 800;
+
+    letter-spacing: -1.5px;
+
+    margin-top: 22px;
+    margin-bottom: 0;
+
+    transition:
+        color 0.3s ease,
+        transform 0.3s ease;
+}
+
+.dashboard-card:hover p {
+    color: var(--card-accent, #38bdf8);
+    transform: translateZ(25px);
+}
+
+.dashboard-card:hover h3 {
+    color: #ffffff;
+    transform: translateZ(15px);
+}
+
+
+/* =========================================
+   EQUIPMENT - BLUE THEME
+========================================= */
+
+.dashboard-container h2:nth-of-type(1) {
+    border-left-color: #38bdf8;
+}
+
+.dashboard-container h2:nth-of-type(1) ~ .dashboard-cards
+.dashboard-card {
+    --card-accent: #38bdf8;
+    --card-glow: rgba(56, 189, 248, 0.17);
+}
+
+
+/* =========================================
+   ALERTS - RED / ORANGE THEME
+========================================= */
+
+.dashboard-container h2:nth-of-type(2) {
+    border-left-color: #fb7185;
+}
+
+.dashboard-container h2:nth-of-type(2) ~ .dashboard-cards
+.dashboard-card {
+    --card-accent: #fb7185;
+    --card-glow: rgba(251, 113, 133, 0.17);
+}
+
+
+/* =========================================
+   MAINTENANCE - GREEN THEME
+========================================= */
+
+.dashboard-container h2:nth-of-type(3) {
+    border-left-color: #34d399;
+}
+
+.dashboard-container h2:nth-of-type(3) ~ .dashboard-cards
+.dashboard-card {
+    --card-accent: #34d399;
+    --card-glow: rgba(52, 211, 153, 0.17);
+}
+
+
+/* =========================================
+   RESPONSIVE - LARGE LAPTOP
+========================================= */
+
+@media (max-width: 1150px) {
+
+    .dashboard-container {
+        padding: 35px;
+    }
+
+    .dashboard-cards {
+        grid-template-columns: repeat(2, minmax(230px, 1fr));
+        gap: 25px;
+    }
+}
+
+
+/* =========================================
+   RESPONSIVE - TABLET
+========================================= */
+
+@media (max-width: 700px) {
+
+    .dashboard-container {
+        padding: 25px;
+    }
+
+    .dashboard-container h1 {
+        font-size: 28px;
+    }
+
+    .dashboard-cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+    }
+
+    .dashboard-card {
+        min-height: 150px;
+        padding: 20px;
+    }
+
+    .dashboard-card p {
+        font-size: 34px;
+    }
+}
+
+
+/* =========================================
+   RESPONSIVE - MOBILE
+========================================= */
+
+@media (max-width: 480px) {
+
+    .dashboard-container {
+        padding: 18px;
+    }
+
+    .dashboard-cards {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .dashboard-container h1 {
+        font-size: 25px;
+    }
+
+    .dashboard-container h2 {
+        font-size: 18px;
+        margin-top: 35px;
+    }
+
+    .dashboard-card {
+        min-height: 135px;
+        padding: 22px;
+    }
+}
+
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .dashboard-card,
+    .dashboard-card::before,
+    .dashboard-card::after,
+    .dashboard-card p,
+    .dashboard-card h3 {
+        transition: none;
+    }
+
+    .dashboard-card:hover {
+        transform: none;
+    }
+}
