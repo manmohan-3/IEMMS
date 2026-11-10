@@ -8,6 +8,8 @@ function Equipment() {
     const [equipmentList, setEquipmentList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [selectedStatus,setSelectedStatus]=useState("");
+    const [searchTerm,setSearchTerm]=useState("");
 
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
@@ -16,12 +18,12 @@ function Equipment() {
     const pageSize = 5;
 
     // Fetch equipment from backend
-    const fetchEquipment = async (page) => {
+    const fetchEquipment = async (page, status=selectedStatus,search=searchTerm) => {
         try {
             setLoading(true);
             setError("");
 
-            const data = await getAllEquipment(page, pageSize);
+            const data = await getAllEquipment(page, pageSize,status,search);
 
             setEquipmentList(data.content);
             setCurrentPage(data.number);
@@ -61,12 +63,30 @@ function Equipment() {
             </div>
 
             {/* Equipment Table */}
-            <div className="equipment-table-container">
+            <div className="equipment-table-heading">
+                <h2>Equipment Inventory</h2>
+                <div className="equipment-search">
+                    <input type="text" placeholder="Search name, code, manufacturer..." value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}onKeyDown={(e) => {
+                            if (e.key === "Enter") {fetchEquipment(0, selectedStatus, searchTerm);}}}
+        />
+        <button onClick={() =>fetchEquipment(0, selectedStatus, searchTerm)}>
+            Search
+        </button>
+            </div>
+            <div className="equipment-filter">
+                <label htmlFor="statusFilter">Status:</label>
+                <select id="statusFilter" value={selectedStatus} onChange={(e) => {const status = e.target.value;
+                setSelectedStatus(status);fetchEquipment(0, status, searchTerm);}}>
+                       <option value="">All Equipment</option>
+                        <option value="ACTIVE">Active</option>
+                        <option value="INACTIVE">Inactive</option>
+                        <option value="MAINTENANCE">Under Maintenance</option>
+                </select>
+            </div>      
+                <span>Page {currentPage + 1} of {totalPages}</span>
 
-                <div className="equipment-table-heading">
-                    <h2>Equipment Inventory</h2>
-                    <span>Page {currentPage + 1} of {totalPages}</span>
-                </div>
+        </div>
 
                 {loading ? (
                     <div className="equipment-message">
@@ -165,7 +185,7 @@ function Equipment() {
 
             </div>
 
-        </div>
+        // </div>
     );
 }
 
