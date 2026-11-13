@@ -1,7 +1,9 @@
 //SHIVAAAHHHH
 import { useEffect, useState } from "react";
-import { getAllEquipment } from "../services/equipmentService";
+import { getAllEquipment,deleteEquipment } from "../services/equipmentService";
 import "./Equipment.css";
+import AddEquipment from "./AddEquipment";
+import EditEquipment from "./EditEquipment";
 
 function Equipment() {
 
@@ -14,6 +16,10 @@ function Equipment() {
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
     const [totalElements, setTotalElements] = useState(0);
+    const [showAddModal,setShowAddModal]=useState(false);
+    const [selectedEquipment, setSelectedEquipment] = useState(null);
+    const [showActionDialog, setShowActionDialog] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);
 
     const pageSize = 5;
 
@@ -41,10 +47,41 @@ function Equipment() {
             setLoading(false);
         }
     };
+    const handleDoubleClick=(equipment)=>{
+        setSelectedEquipment(equipment);
+        setShowActionDialog(true);
+    }
 
     useEffect(() => {
         fetchEquipment(0);
     }, []);
+    const handleEquipmentAdded=(equipment)=>{
+        setSelectedStatus("");
+        setSearchTerm("");
+        fetchEquipment(0,"","");
+    };
+    const handleUpdateSelected=()=>{
+        setShowActionDialog(false);
+        setShowEditModal(true);
+    }
+    const handleDeleteEquipment=async (equipment)=>{
+        const confirm=window.confirm(`Are you to delete equipment ${equipment.name}`);
+        if(!confirm){
+            return;
+        }
+        try{
+            const response = await deleteEquipment(equipment.Id);
+            setSelectedEquipment(null);
+            setShowActionDialog(false);
+            fetchEquipment(0);
+        }
+        catch(err){
+            console.log("Could not delete equipment ",err);
+            alert(err.response?.data?.message||"unable to delete equipment");
+        }
+
+    }
+
 
     return (
         <div className="equipment-container">
@@ -59,6 +96,9 @@ function Equipment() {
                 <div className="equipment-total">
                     <span>Total Equipment</span>
                     <h2>{totalElements}</h2>
+                    <button className="add-equipment-btn" onClick={()=>{setShowAddModal(true)}}>
+                        + Add Equipment
+                    </button>
                 </div>
             </div>
 
@@ -122,7 +162,7 @@ function Equipment() {
                             <tbody>
                                 {equipmentList.map((equipment) => (
 
-                                    <tr key={equipment.Id}>
+                                    <tr key={equipment.Id} onDoubleClick={()=>{handleDoubleClick(equipment)}}>
 
                                         <td>#{equipment.Id}</td>
 
@@ -182,10 +222,41 @@ function Equipment() {
                     </div>
 
                 )}
+                {showAddModal && (
+                    <AddEquipment onClose={() => setShowAddModal(false)}
+                                onEquipmentAdded={handleEquipmentAdded}/>
+                )}
+                {
+                    showActionDialog && selectedEquipment &&(
+                        <div className="modal-overlay">
+                            <div className="equipment-modal">
+                                <h2>Equipment Actions</h2>
+                                <p>What would you like to do with{" "}
+                                <strong>{selectedEquipment.name}</strong>?</p>
+                                    <div className="form-actions">
+                                    <button type="button" onClick={handleUpdateSelected}>Update Equipment</button>
+                                        <button type="button" onClick={() =>{handleDeleteEquipment(selectedEquipment) }}>Delete Equipment</button>
+
+                                <button type="button" onClick={() => setShowActionDialog(false)}>Cancel</button>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    )
+                }
+                {
+                    showEditModal && selectedEquipment &&(
+                        <EditEquipment equipment={selectedEquipment}
+                            onClose={()=>{setShowEditModal(false)}}
+                            onEquipmentUpdated={()=>{fetchEquipment(currentPage)}}
+                        />
+                    )
+                }
 
             </div>
 
-        // </div>
+        
     );
 }
 

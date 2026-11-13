@@ -260,3 +260,20 @@
     background: #269df5;
     transform: translateY(-2px);
 }
+.add-equipment-btn {
+    margin-top: 12px;
+    background: #1684d8;
+    color: white;
+    border: none;
+    padding: 9px 15px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.add-equipment-btn:hover {
+    background: #269df5;
+    transform: translateY(-2px);
+}

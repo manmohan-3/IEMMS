@@ -1,0 +1,169 @@
+/* Background overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1000;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+/* Modal container */
+.equipment-modal {
+    background: #1e293b;
+    color: #f1f5f9;
+
+    width: 100%;
+    max-width: 600px;
+
+    padding: 30px;
+    border-radius: 12px;
+
+    border: 1px solid #334155;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+/* Heading */
+.equipment-modal h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+
+    color: #38bdf8;
+    font-size: 24px;
+}
+
+/* Form group */
+.equipment-modal .form-group {
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 18px;
+}
+
+/* Labels */
+.equipment-modal label {
+    margin-bottom: 8px;
+
+    color: #cbd5e1;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Inputs, select and textarea */
+.equipment-modal input,
+.equipment-modal select,
+.equipment-modal textarea {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 11px 12px;
+
+    background: #0f172a;
+    color: #f8fafc;
+
+    border: 1px solid #475569;
+    border-radius: 6px;
+
+    font-size: 14px;
+    outline: none;
+}
+
+/* Focus effect */
+.equipment-modal input:focus,
+.equipment-modal select:focus,
+.equipment-modal textarea:focus {
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.15);
+}
+
+/* Textarea */
+.equipment-modal textarea {
+    resize: vertical;
+}
+
+/* Buttons container */
+.equipment-modal .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+
+    margin-top: 25px;
+}
+
+/* Buttons */
+.equipment-modal .form-actions button {
+    padding: 11px 20px;
+
+    border: none;
+    border-radius: 6px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+/* Cancel button */
+.equipment-modal .form-actions button:first-child {
+    background: #475569;
+    color: white;
+}
+
+.equipment-modal .form-actions button:first-child:hover {
+    background: #64748b;
+}
+
+/* Update button */
+.equipment-modal .form-actions button:last-child {
+    background: #0284c7;
+    color: white;
+}
+
+.equipment-modal .form-actions button:last-child:hover {
+    background: #0369a1;
+}
+
+/* Disabled buttons */
+.equipment-modal .form-actions button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Error message */
+.equipment-modal .error-message {
+    background: rgba(239, 68, 68, 0.12);
+    color: #f87171;
+
+    padding: 10px;
+    border-radius: 6px;
+
+    margin-bottom: 18px;
+    font-size: 14px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+    .equipment-modal {
+        padding: 20px;
+    }
+
+    .equipment-modal .form-actions {
+        flex-direction: column;
+    }
+
+    .equipment-modal .form-actions button {
+        width: 100%;
+    }
+}
