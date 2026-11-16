@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Sidebar from "./components/Sidebar";
 import Equipment from "./pages/Equipment";
+import Alerts from "./pages/Alerts";
 
 import "./App.css";
 
@@ -93,6 +94,8 @@ function App() {
                             {activePage === "Dashboard" ? (
                                 <Dashboard />
                             ) : activePage==="Equipment" ?(<Equipment/>):
+                            activePage==="Alerts" ?(<Alerts/>)
+                            :
                              (
                                 <div className="coming-soon">
                                     <h2>{activePage}</h2>
