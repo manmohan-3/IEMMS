@@ -16,6 +16,7 @@ function Alerts() {
     const [selectedStatus, setSelectedStatus] = useState("");
     const [actionLoadingId,setActionLoadingId]=useState(null);
     const [successMessage,setSuccessMessage]=useState("");
+    const [actionError,setActionError]=useState("");
 
     // Fetch All Alerts
     const fetchAllAlerts = async (showLoading=true) => {
@@ -45,12 +46,12 @@ function Alerts() {
         try{
             setActionLoadingId(alertId);
             setSuccessMessage("");
-            serError("");
-            if(action==="ACKWNOLEDGE"){
+            setActionError("");
+            if(action==="ACKNOWLEDGED"){
                 await acknowledgeAlert(alertId);
                 setSuccessMessage("Ackwnoledge the alert successfully");
             }
-            else if(action==="RESOLVE"){
+            else if(action==="RESOLVED"){
                 await resolveAlert(alertId);
                 setSuccessMessage("Resolved alert successfully");
             }
@@ -58,7 +59,7 @@ function Alerts() {
         }
         catch(err){
             console.log("Alert while changing alert status",err);
-            setError(err.response?.data?.message);
+            setActionError(err.response?.data?.message);
         }
         finally{
             setActionLoadingId(null);
@@ -118,6 +119,16 @@ function Alerts() {
         <div className="alerts-container">
 
             <h1>Alerts Management</h1>
+            {
+                successMessage&&(
+                    <p className="alert-success-message">{successMessage}</p>
+                )
+            }
+            {
+                actionError&&(
+                    <p className="alert-error-message">{actionError}</p>
+                )
+            }
 
             {/* Alert Summary */}
 
@@ -264,6 +275,21 @@ function Alerts() {
 
                                     <td>{alert.message}</td>
                                     <td className="alert-actions">
+                                        {alert.status==="OPEN" &&(
+                                            <button className="acknowledge-btn" disabled={actionLoadingId===alert.Id}
+                                            onClick={()=>{handleAlertAction(alert.Id,"ACKNOWLEDGED")}}>
+                                                {actionLoadingId===alert.Id ? "Processing":"ACKNOWLEDGE"}
+
+                                            </button>
+                                        )}
+                                        {alert.status==="OPEN"||alert.status==="ACKNOWLEDGED"&&(
+                                            <button className="resolve-btn" disabled={actionLoadingId===alert.Id}
+                                            onClick={()=>{handleAlertAction(alert.Id,"RESOLVED")}}
+                                            >{actionLoadingId===alert.Id?"Processing":"RESOLVE"}</button>
+                                        )}
+                                        {
+                                            alert.status==="RESOLVED" &&(<span className="completed-badge">Completed</span>)
+                                        }
 
                                     </td>
 

@@ -556,3 +556,136 @@
     }
 
 }
+/* =========================================
+   ALERT ACTION BUTTONS
+========================================= */
+
+.alert-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.alert-actions button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.acknowledge-btn {
+    background: rgba(56, 189, 248, 0.15);
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.4) !important;
+}
+
+.acknowledge-btn:hover:not(:disabled) {
+    background: #0284c7;
+    color: #ffffff;
+}
+
+.resolve-btn {
+    background: rgba(52, 211, 153, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(52, 211, 153, 0.4) !important;
+}
+
+.resolve-btn:hover:not(:disabled) {
+    background: #059669;
+    color: #ffffff;
+}
+
+.alert-actions button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* =========================================
+   SUCCESS AND ERROR MESSAGES
+========================================= */
+
+.alert-success-message {
+    padding: 12px 16px;
+    margin: 12px 0;
+    border-radius: 6px;
+    background: rgba(52, 211, 153, 0.12);
+    border: 1px solid rgba(52, 211, 153, 0.35);
+    color: #34d399;
+}
+
+.alert-error-message {
+    padding: 12px 16px;
+    margin: 12px 0;
+    border-radius: 6px;
+    background: rgba(248, 113, 113, 0.12);
+    border: 1px solid rgba(248, 113, 113, 0.35);
+    color: #f87171;
+}
+/* Actions column */
+.alerts-table th:last-child,
+.alerts-table td:last-child {
+    min-width: 190px;
+    width: 190px;
+    white-space: nowrap;
+    text-align: center;
+}
+/* Action buttons layout */
+.alerts-table td.alert-actions {
+    display: table-cell;
+    white-space: nowrap;
+}
+
+.alert-actions button {
+    display: inline-block;
+    min-width: 90px;
+    padding: 9px 12px;
+    margin: 3px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.alert-actions .acknowledge-btn {
+    background: #075985;
+    color: #ffffff;
+    border: 1px solid #38bdf8;
+}
+
+.alert-actions .resolve-btn {
+    background: #065f46;
+    color: #ffffff;
+    border: 1px solid #34d399;
+}
+
+.alert-actions button:hover:not(:disabled) {
+    filter: brightness(1.3);
+}
+
+.alert-actions button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+/* Completed Status Badge */
+
+.completed-badge {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 6px;
+
+    background: rgba(52, 211, 153, 0.15);
+    color: #34d399;
+
+    border: 1px solid rgba(52, 211, 153, 0.4);
+
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
