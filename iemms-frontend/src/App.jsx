@@ -7,6 +7,7 @@ import Dashboard from "./pages/Dashboard";
 import Sidebar from "./components/Sidebar";
 import Equipment from "./pages/Equipment";
 import Alerts from "./pages/Alerts";
+import Maintenance from "./pages/Maintenance";
 
 import "./App.css";
 
@@ -95,7 +96,7 @@ function App() {
                                 <Dashboard />
                             ) : activePage==="Equipment" ?(<Equipment/>):
                             activePage==="Alerts" ?(<Alerts/>)
-                            :
+                            :activePage==="Maintenance" ?(<Maintenance/>):
                              (
                                 <div className="coming-soon">
                                     <h2>{activePage}</h2>

@@ -9,6 +9,7 @@
     padding: 22px 25px 35px;
     box-sizing: border-box;
     color: #e2e8f0;
+    animation: alertsFadeIn 0.6s ease;
 }
 
 .alerts-container h1 {
@@ -16,6 +17,7 @@
     font-size: 27px;
     margin: 0 0 25px;
     color: #f8fafc;
+    animation: slideDown 0.5s ease;
 }
 
 
@@ -26,9 +28,9 @@
 .alert-summary {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 20px;
+    gap: 22px;
     width: 100%;
-    margin-bottom: 28px;
+    margin-bottom: 30px;
 }
 
 .alert-card {
@@ -36,45 +38,60 @@
     overflow: hidden;
     isolation: isolate;
 
-    background: rgba(17, 28, 46, 0.85);
+    background: linear-gradient(
+        145deg,
+        #172b43,
+        #101c2e
+    );
+
     border: 1px solid rgba(148, 163, 184, 0.15);
+    border-radius: 12px;
 
-    border-radius: 24px 8px 24px 8px;
-    padding: 22px 15px;
-
+    padding: 24px 18px;
     text-align: center;
     min-width: 0;
+    min-height: 125px;
 
-    transform-style: preserve-3d;
+    box-sizing: border-box;
 
     transition:
         transform 0.4s ease,
         box-shadow 0.4s ease,
         border-color 0.4s ease;
 
+    animation: cardAppear 0.6s ease backwards;
+
     --card-accent: #38bdf8;
     --card-glow: rgba(56, 189, 248, 0.17);
 }
+
+/* Individual card colors */
 
 .alert-card:nth-child(1) {
     --card-accent: #38bdf8;
     --card-glow: rgba(56, 189, 248, 0.17);
+    animation-delay: 0.05s;
 }
 
 .alert-card:nth-child(2) {
-    --card-accent: #fb7185;
-    --card-glow: rgba(251, 113, 133, 0.17);
+    --card-accent: #f87171;
+    --card-glow: rgba(248, 113, 113, 0.17);
+    animation-delay: 0.12s;
 }
 
 .alert-card:nth-child(3) {
     --card-accent: #fbbf24;
     --card-glow: rgba(251, 191, 36, 0.17);
+    animation-delay: 0.19s;
 }
 
 .alert-card:nth-child(4) {
-    --card-accent: #34d399;
-    --card-glow: rgba(52, 211, 153, 0.17);
+    --card-accent: #4ade80;
+    --card-glow: rgba(74, 222, 128, 0.17);
+    animation-delay: 0.26s;
 }
+
+/* Background glow */
 
 .alert-card::before {
     content: "";
@@ -96,6 +113,8 @@
     z-index: -1;
 }
 
+/* Glowing border */
+
 .alert-card::after {
     content: "";
     position: absolute;
@@ -114,18 +133,20 @@
     pointer-events: none;
 }
 
+/* Card hover */
+
 .alert-card:hover {
     transform:
         perspective(1200px)
-        translateY(-10px)
-        rotateX(4deg)
-        rotateY(-3deg)
+        translateY(-8px)
+        rotateX(3deg)
+        rotateY(-2deg)
         scale(1.02);
 
     border-color: var(--card-accent);
 
     box-shadow:
-        0 20px 35px rgba(0, 0, 0, 0.3),
+        0 15px 30px rgba(0, 0, 0, 0.3),
         0 0 22px var(--card-glow);
 }
 
@@ -135,7 +156,7 @@
 
 .alert-card:hover::after {
     opacity: 0.7;
-    transform: scale(1.5);
+    transform: scale(1);
 }
 
 .alert-card h3,
@@ -149,22 +170,25 @@
 }
 
 .alert-card h3 {
-    font-size: 19px;
-    color: #e2e8f0;
+    font-size: 17px;
+    color: #a7b8cc;
+    font-weight: 500;
+    margin-bottom: 14px;
 }
 
 .alert-card h2 {
-    font-size: 27px;
+    font-size: 30px;
     color: #f8fafc;
+    font-weight: 700;
 }
 
 .alert-card:hover h3 {
-    transform: translateZ(15px);
+    transform: translateY(-2px);
 }
 
 .alert-card:hover h2 {
     color: var(--card-accent);
-    transform: translateZ(25px);
+    transform: scale(1.08);
 }
 
 
@@ -175,17 +199,23 @@
 .alerts-table-container {
     width: 100%;
     max-width: none;
-
     box-sizing: border-box;
 
-    background: #111c2e;
-    border: 1px solid #263449;
+    background: linear-gradient(
+        145deg,
+        #172b43,
+        #101c2e
+    );
+
+    border: 1px solid #263d56;
     border-radius: 12px;
 
-    padding: 22px;
+    padding: 24px;
 
     overflow-x: auto;
     overflow-y: hidden;
+
+    animation: slideUp 0.6s ease;
 }
 
 .alerts-header {
@@ -200,7 +230,7 @@
 }
 
 .alerts-header h2 {
-    color: #e2e8f0;
+    color: #f1f5f9;
     font-size: 21px;
     margin: 0;
 }
@@ -215,7 +245,6 @@
     align-items: center;
     gap: 10px;
     flex-wrap: wrap;
-
     max-width: 100%;
 }
 
@@ -243,7 +272,8 @@
 
 .alerts-filters input:focus {
     border-color: #38bdf8;
-    box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.2);
+    background: #132238;
 }
 
 .alerts-filters select {
@@ -265,6 +295,7 @@
 .alerts-filters select:hover,
 .alerts-filters select:focus {
     border-color: #38bdf8;
+    box-shadow: 0 0 8px rgba(56, 189, 248, 0.15);
 }
 
 .alerts-filters select option {
@@ -313,18 +344,19 @@
 }
 
 .alerts-table thead {
-    background: #1a2940;
+    background: #1e354f;
 }
 
 .alerts-table th {
     padding: 16px 8px;
 
-    color: #93c5fd;
+    color: #7dd3fc;
     font-size: 11px;
     font-weight: 700;
 
     text-align: center;
     text-transform: uppercase;
+    letter-spacing: 0.5px;
 
     white-space: normal;
     overflow-wrap: break-word;
@@ -333,7 +365,7 @@
 .alerts-table td {
     padding: 20px 8px;
 
-    border-bottom: 1px solid #263449;
+    border-bottom: 1px solid rgba(71, 85, 105, 0.35);
 
     color: #cbd5e1;
     font-size: 12px;
@@ -349,14 +381,14 @@
 }
 
 .alerts-table tbody tr:hover {
-    background: rgba(56, 189, 248, 0.06);
+    background: rgba(56, 189, 248, 0.07);
 }
 
 .alerts-table tbody tr:last-child td {
     border-bottom: none;
 }
 
-/* Individual Column Widths */
+/* Individual column widths */
 
 .alerts-table th:nth-child(1),
 .alerts-table td:nth-child(1) {
@@ -420,9 +452,9 @@
 
 .severity-badge {
     display: inline-block;
-    padding: 9px 11px;
 
-    border-radius: 25px;
+    padding: 8px 11px;
+    border-radius: 6px;
 
     font-size: 11px;
     font-weight: 700;
@@ -434,6 +466,8 @@
     background: rgba(239, 68, 68, 0.13);
     color: #f87171;
     border: 1px solid rgba(239, 68, 68, 0.4);
+
+    animation: criticalPulse 2s infinite;
 }
 
 .severity-badge.warning {
@@ -449,9 +483,9 @@
 
 .alert-status {
     display: inline-block;
-    padding: 9px 11px;
 
-    border-radius: 25px;
+    padding: 8px 11px;
+    border-radius: 6px;
 
     font-size: 11px;
     font-weight: 700;
@@ -462,16 +496,19 @@
 .alert-status.open {
     background: rgba(239, 68, 68, 0.13);
     color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
 .alert-status.acknowledged {
     background: rgba(56, 189, 248, 0.13);
     color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.3);
 }
 
 .alert-status.resolved {
     background: rgba(16, 185, 129, 0.13);
     color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
 }
 
 
@@ -499,15 +536,212 @@
 
 
 /* =========================================
+   ALERT ACTION BUTTONS
+========================================= */
+
+.alert-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.alert-actions button {
+    display: inline-block;
+
+    min-width: 90px;
+    padding: 9px 12px;
+    margin: 3px;
+
+    border: 1px solid transparent;
+    border-radius: 6px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+}
+
+.acknowledge-btn {
+    background: rgba(56, 189, 248, 0.15);
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.4) !important;
+}
+
+.alert-actions .acknowledge-btn:hover:not(:disabled) {
+    background: #0284c7;
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(14, 165, 233, 0.3);
+    transform: translateY(-2px);
+}
+
+.resolve-btn {
+    background: rgba(52, 211, 153, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(52, 211, 153, 0.4) !important;
+}
+
+.alert-actions .resolve-btn:hover:not(:disabled) {
+    background: #059669;
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(52, 211, 153, 0.3);
+    transform: translateY(-2px);
+}
+
+.alert-actions button:active:not(:disabled) {
+    transform: scale(0.96);
+}
+
+.alert-actions button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+/* Actions column */
+
+.alerts-table th:last-child,
+.alerts-table td:last-child {
+    min-width: 190px;
+    width: 190px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.alerts-table td.alert-actions {
+    display: table-cell;
+    white-space: nowrap;
+}
+
+
+/* =========================================
+   SUCCESS AND ERROR MESSAGES
+========================================= */
+
+.alert-success-message {
+    padding: 12px 16px;
+    margin: 12px 0;
+
+    border-radius: 8px;
+
+    background: rgba(52, 211, 153, 0.12);
+    border: 1px solid rgba(52, 211, 153, 0.35);
+
+    color: #34d399;
+
+    animation: slideDown 0.3s ease;
+}
+
+.alert-error-message {
+    padding: 12px 16px;
+    margin: 12px 0;
+
+    border-radius: 8px;
+
+    background: rgba(248, 113, 113, 0.12);
+    border: 1px solid rgba(248, 113, 113, 0.35);
+
+    color: #f87171;
+
+    animation: slideDown 0.3s ease;
+}
+
+
+/* Completed Status Badge */
+
+.completed-badge {
+    display: inline-block;
+    padding: 8px 14px;
+
+    border-radius: 6px;
+
+    background: rgba(52, 211, 153, 0.15);
+    color: #34d399;
+
+    border: 1px solid rgba(52, 211, 153, 0.4);
+
+    font-size: 12px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================
+   ANIMATIONS
+========================================= */
+
+@keyframes alertsFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes cardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes criticalPulse {
+    0%, 100% {
+        box-shadow: 0 0 0 rgba(239, 68, 68, 0);
+    }
+
+    50% {
+        box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
+    }
+}
+
+
+/* =========================================
    RESPONSIVE DESIGN
 ========================================= */
 
 @media (max-width: 1200px) {
-
     .alert-summary {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-
 }
 
 @media (max-width: 900px) {
@@ -525,7 +759,6 @@
         flex: 1;
         width: auto;
     }
-
 }
 
 @media (max-width: 600px) {
@@ -554,138 +787,19 @@
         width: 100%;
         box-sizing: border-box;
     }
-
-}
-/* =========================================
-   ALERT ACTION BUTTONS
-========================================= */
-
-.alert-actions {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    white-space: nowrap;
 }
 
-.alert-actions button {
-    padding: 8px 12px;
-    border: none;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.25s ease;
-}
-
-.acknowledge-btn {
-    background: rgba(56, 189, 248, 0.15);
-    color: #38bdf8;
-    border: 1px solid rgba(56, 189, 248, 0.4) !important;
-}
-
-.acknowledge-btn:hover:not(:disabled) {
-    background: #0284c7;
-    color: #ffffff;
-}
-
-.resolve-btn {
-    background: rgba(52, 211, 153, 0.15);
-    color: #34d399;
-    border: 1px solid rgba(52, 211, 153, 0.4) !important;
-}
-
-.resolve-btn:hover:not(:disabled) {
-    background: #059669;
-    color: #ffffff;
-}
-
-.alert-actions button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
 
 /* =========================================
-   SUCCESS AND ERROR MESSAGES
+   REDUCED MOTION ACCESSIBILITY
 ========================================= */
 
-.alert-success-message {
-    padding: 12px 16px;
-    margin: 12px 0;
-    border-radius: 6px;
-    background: rgba(52, 211, 153, 0.12);
-    border: 1px solid rgba(52, 211, 153, 0.35);
-    color: #34d399;
-}
+@media (prefers-reduced-motion: reduce) {
 
-.alert-error-message {
-    padding: 12px 16px;
-    margin: 12px 0;
-    border-radius: 6px;
-    background: rgba(248, 113, 113, 0.12);
-    border: 1px solid rgba(248, 113, 113, 0.35);
-    color: #f87171;
-}
-/* Actions column */
-.alerts-table th:last-child,
-.alerts-table td:last-child {
-    min-width: 190px;
-    width: 190px;
-    white-space: nowrap;
-    text-align: center;
-}
-/* Action buttons layout */
-.alerts-table td.alert-actions {
-    display: table-cell;
-    white-space: nowrap;
-}
-
-.alert-actions button {
-    display: inline-block;
-    min-width: 90px;
-    padding: 9px 12px;
-    margin: 3px;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-.alert-actions .acknowledge-btn {
-    background: #075985;
-    color: #ffffff;
-    border: 1px solid #38bdf8;
-}
-
-.alert-actions .resolve-btn {
-    background: #065f46;
-    color: #ffffff;
-    border: 1px solid #34d399;
-}
-
-.alert-actions button:hover:not(:disabled) {
-    filter: brightness(1.3);
-}
-
-.alert-actions button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-/* Completed Status Badge */
-
-.completed-badge {
-    display: inline-block;
-    padding: 8px 14px;
-    border-radius: 6px;
-
-    background: rgba(52, 211, 153, 0.15);
-    color: #34d399;
-
-    border: 1px solid rgba(52, 211, 153, 0.4);
-
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    white-space: nowrap;
+    .alerts-container *,
+    .alerts-container *::before,
+    .alerts-container *::after {
+        animation: none !important;
+        transition: none !important;
+    }
 }
