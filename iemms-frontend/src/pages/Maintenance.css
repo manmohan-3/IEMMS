@@ -536,3 +536,568 @@
     }
 
 }
+/* =========================================
+   MAINTENANCE TICKET DETAILS MODAL
+========================================= */
+
+.ticket-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: rgba(2, 8, 23, 0.82);
+    backdrop-filter: blur(8px);
+    animation: modalOverlayFade 0.25s ease;
+}
+
+.ticket-modal {
+    width: 100%;
+    max-width: 850px;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: linear-gradient(145deg, #111c32, #0b1426);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: 18px;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.55),
+                0 0 30px rgba(56, 189, 248, 0.08);
+    animation: modalSlideIn 0.3s ease;
+}
+
+/* HEADER */
+
+.ticket-modal-header {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 28px;
+    background: rgba(30, 41, 59, 0.75);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+.ticket-modal-header h2 {
+    margin: 0;
+    color: #f1f5f9;
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
+
+.ticket-modal-header p {
+    margin: 7px 0 0;
+    color: #38bdf8;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+}
+
+.close-modal-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(248, 113, 113, 0.3);
+    border-radius: 9px;
+    background: rgba(248, 113, 113, 0.08);
+    color: #f87171;
+    font-size: 25px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.close-modal-btn:hover {
+    background: #ef4444;
+    color: white;
+    transform: rotate(90deg);
+}
+
+/* DETAILS CONTENT */
+
+.ticket-details-grid {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 26px 28px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 17px;
+}
+
+.ticket-details-grid::-webkit-scrollbar {
+    width: 7px;
+}
+
+.ticket-details-grid::-webkit-scrollbar-track {
+    background: #0f172a;
+    border-radius: 10px;
+}
+
+.ticket-details-grid::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 10px;
+}
+
+.ticket-details-grid::-webkit-scrollbar-thumb:hover {
+    background: #38bdf8;
+}
+
+/* INDIVIDUAL DETAIL CARDS */
+
+.ticket-detail {
+    min-width: 0;
+    padding: 17px 19px;
+    background: rgba(30, 41, 59, 0.65);
+    border: 1px solid rgba(148, 163, 184, 0.12);
+    border-radius: 11px;
+    transition: all 0.25s ease;
+}
+
+.ticket-detail:hover {
+    background: rgba(30, 41, 59, 0.95);
+    border-color: rgba(56, 189, 248, 0.35);
+    transform: translateY(-2px);
+}
+
+.ticket-detail label {
+    display: block;
+    margin-bottom: 9px;
+    color: #94a3b8;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.9px;
+}
+
+.ticket-detail p {
+    margin: 0;
+    color: #e2e8f0;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.ticket-detail.full-width {
+    grid-column: 1 / -1;
+}
+
+.ticket-detail.full-width p {
+    color: #cbd5e1;
+    font-weight: 400;
+}
+
+/* FOOTER */
+
+.ticket-modal-footer {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: flex-end;
+    padding: 17px 28px;
+    background: rgba(30, 41, 59, 0.75);
+    border-top: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+.close-ticket-btn {
+    padding: 10px 27px;
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    border-radius: 8px;
+    background: linear-gradient(135deg, #0284c7, #0369a1);
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.close-ticket-btn:hover {
+    background: linear-gradient(135deg, #0ea5e9, #0284c7);
+    box-shadow: 0 5px 18px rgba(14, 165, 233, 0.25);
+    transform: translateY(-2px);
+}
+
+/* ANIMATIONS */
+
+@keyframes modalOverlayFade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* RESPONSIVE DESIGN */
+
+@media (max-width: 600px) {
+    .ticket-modal-overlay {
+        padding: 10px;
+    }
+
+    .ticket-modal {
+        max-height: 90vh;
+        border-radius: 13px;
+    }
+
+    .ticket-modal-header {
+        padding: 18px;
+    }
+
+    .ticket-modal-header h2 {
+        font-size: 17px;
+    }
+
+    .ticket-details-grid {
+        grid-template-columns: 1fr;
+        padding: 18px;
+        gap: 12px;
+    }
+
+    .ticket-detail.full-width {
+        grid-column: auto;
+    }
+
+    .ticket-modal-footer {
+        padding: 14px 18px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ticket-modal-overlay,
+    .ticket-modal {
+        animation: none;
+    }
+
+    .ticket-detail,
+    .close-modal-btn,
+    .close-ticket-btn {
+        transition: none;
+    }
+}
+/* =========================================
+   TECHNICIAN ASSIGNMENT SECTION
+========================================= */
+
+.technician-assignment {
+    flex-shrink: 0;
+    margin: 0 28px 20px;
+    padding: 22px;
+    background: linear-gradient(145deg, #17263d, #111c30);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    border-radius: 13px;
+    animation: assignmentAppear 0.3s ease;
+}
+
+.technician-assignment h3 {
+    margin: 0 0 8px;
+    color: #f1f5f9;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.technician-assignment p {
+    margin: 0 0 17px;
+    color: #94a3b8;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.technician-assignment input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    background: #0b1426;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    color: #f1f5f9;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.25s ease;
+}
+
+.technician-assignment input::placeholder {
+    color: #64748b;
+}
+
+.technician-assignment input:focus {
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.12);
+}
+
+/* =========================================
+   COMMON ACTION BUTTON STYLES
+========================================= */
+
+.assign-btn,
+.start-btn,
+.complete-btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 19px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+/* ASSIGN / UPDATE TECHNICIAN */
+
+.assign-btn {
+    background: linear-gradient(135deg, #0284c7, #0369a1);
+    border-color: rgba(56, 189, 248, 0.35);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.15);
+}
+
+.assign-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #0ea5e9, #0284c7);
+    box-shadow: 0 6px 18px rgba(14, 165, 233, 0.25);
+    transform: translateY(-2px);
+}
+
+/* START MAINTENANCE */
+
+.start-btn {
+    background: linear-gradient(135deg, #b45309, #92400e);
+    border-color: rgba(251, 191, 36, 0.35);
+    color: #fef3c7;
+}
+
+.start-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #d97706, #b45309);
+    box-shadow: 0 6px 18px rgba(245, 158, 11, 0.22);
+    transform: translateY(-2px);
+}
+
+/* COMPLETE MAINTENANCE */
+
+.complete-btn {
+    background: linear-gradient(135deg, #15803d, #166534);
+    border-color: rgba(74, 222, 128, 0.35);
+    color: #dcfce7;
+}
+
+.complete-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #16a34a, #15803d);
+    box-shadow: 0 6px 18px rgba(34, 197, 94, 0.22);
+    transform: translateY(-2px);
+}
+
+/* DISABLED BUTTON */
+
+.assign-btn:disabled,
+.start-btn:disabled,
+.complete-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* =========================================
+   MODAL FOOTER ACTIONS
+========================================= */
+
+.ticket-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.ticket-modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+/* =========================================
+   ANIMATIONS
+========================================= */
+
+@keyframes assignmentAppear {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================================
+   RESPONSIVE DESIGN
+========================================= */
+
+@media (max-width: 600px) {
+    .technician-assignment {
+        margin: 0 18px 15px;
+        padding: 17px;
+    }
+
+    .ticket-modal-footer {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .ticket-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .ticket-actions button,
+    .ticket-modal-footer > .close-ticket-btn,
+    .technician-assignment .assign-btn {
+        width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .technician-assignment {
+        animation: none;
+    }
+
+    .assign-btn,
+    .start-btn,
+    .complete-btn {
+        transition: none;
+    }
+}
+/* Common Cancel Button */
+
+.cancel-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 115px;
+    padding: 11px 20px;
+
+    background: linear-gradient(135deg, #991b1b, #7f1d1d);
+    color: #fee2e2;
+
+    border: 1px solid rgba(248, 113, 113, 0.4);
+    border-radius: 8px;
+
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.cancel-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    border-color: #f87171;
+    color: #fff;
+    box-shadow: 0 6px 18px rgba(239, 68, 68, 0.25);
+    transform: translateY(-2px);
+}
+
+.cancel-btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.cancel-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+
+/* OPEN / ASSIGNED - Assignment Section */
+
+.technician-assignment .cancel-btn {
+    margin-top: 12px;
+    margin-left: 0;
+}
+
+
+/* ASSIGNED / IN_PROGRESS - Footer Section */
+
+.ticket-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.ticket-actions .cancel-btn {
+    margin: 0;
+}
+
+
+/* Responsive */
+
+@media (max-width: 600px) {
+
+    .technician-assignment .cancel-btn {
+        width: 100%;
+    }
+
+    .ticket-actions {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .ticket-actions .cancel-btn {
+        width: 100%;
+    }
+}
+/* OPEN / ASSIGNED assignment section */
+
+.technician-assignment {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Keep heading and description on their own rows */
+.technician-assignment h3,
+.technician-assignment p {
+    width: 100%;
+}
+
+/* Input takes available space */
+.technician-assignment input {
+    flex: 1;
+    min-width: 200px;
+}
+
+/* Assign and Cancel buttons */
+.technician-assignment .assign-btn,
+.technician-assignment .cancel-btn {
+    margin: 0;
+    min-width: 135px;
+    height: 42px;
+}
