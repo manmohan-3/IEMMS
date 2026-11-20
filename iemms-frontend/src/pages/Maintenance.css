@@ -1101,3 +1101,211 @@
     min-width: 135px;
     height: 42px;
 }
+/* =========================================
+   MAINTENANCE SEARCH AND FILTERS
+========================================= */
+
+.maintenance-filters {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    padding: 20px;
+    margin: 15px 0 20px;
+
+    background: linear-gradient(
+        135deg,
+        rgba(15, 30, 48, 0.95),
+        rgba(17, 40, 62, 0.95)
+    );
+
+    border: 1px solid rgba(56, 189, 248, 0.15);
+    border-radius: 12px;
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+
+    animation: maintenanceFadeIn 0.5s ease;
+}
+
+
+/* Search Input */
+
+.maintenance-filters input {
+    flex: 2;
+    min-width: 200px;
+
+    padding: 12px 16px;
+
+    background: #0b1929;
+    color: #e2e8f0;
+
+    border: 1px solid #263e56;
+    border-radius: 8px;
+
+    font-size: 13px;
+    outline: none;
+
+    transition: all 0.3s ease;
+}
+
+.maintenance-filters input::placeholder {
+    color: #7890a8;
+}
+
+.maintenance-filters input:focus {
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.12);
+    background: #102238;
+}
+
+
+/* Status and Priority Dropdowns */
+
+.maintenance-filters select {
+    flex: 1;
+    min-width: 145px;
+
+    padding: 12px 14px;
+
+    background: #0b1929;
+    color: #cbd5e1;
+
+    border: 1px solid #263e56;
+    border-radius: 8px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    outline: none;
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+}
+
+.maintenance-filters select:hover {
+    border-color: #38bdf8;
+    background: #102238;
+}
+
+.maintenance-filters select:focus {
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.12);
+}
+
+.maintenance-filters select option {
+    background: #102238;
+    color: #e2e8f0;
+}
+
+
+/* Clear Filters Button */
+
+.clear-filters-btn {
+    padding: 12px 18px;
+
+    background: linear-gradient(
+        135deg,
+        #334155,
+        #1e293b
+    );
+
+    color: #cbd5e1;
+
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 8px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    white-space: nowrap;
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+}
+
+.clear-filters-btn:hover {
+    background: linear-gradient(
+        135deg,
+        #0ea5e9,
+        #0369a1
+    );
+
+    color: #ffffff;
+    border-color: #38bdf8;
+
+    box-shadow: 0 5px 15px rgba(14, 165, 233, 0.25);
+    transform: translateY(-2px);
+}
+
+.clear-filters-btn:active {
+    transform: translateY(0);
+}
+
+
+/* No Matching Tickets */
+
+.maintenance-table .no-data {
+    padding: 35px 15px;
+
+    color: #94a3b8;
+    text-align: center;
+
+    font-size: 14px;
+    letter-spacing: 0.3px;
+}
+
+
+/* =========================================
+   RESPONSIVE DESIGN
+========================================= */
+
+@media (max-width: 1000px) {
+
+    .maintenance-filters {
+        flex-wrap: wrap;
+    }
+
+    .maintenance-filters input {
+        flex: 1 1 100%;
+    }
+
+    .maintenance-filters select {
+        flex: 1;
+    }
+
+    .clear-filters-btn {
+        flex: 1;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .maintenance-filters {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 15px;
+        gap: 12px;
+    }
+
+    .maintenance-filters input,
+    .maintenance-filters select,
+    .clear-filters-btn {
+        width: 100%;
+        min-width: 0;
+        flex: none;
+    }
+}
+
+
+/* Accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .maintenance-filters,
+    .maintenance-filters *,
+    .clear-filters-btn {
+        animation: none;
+        transition: none;
+    }
+}
