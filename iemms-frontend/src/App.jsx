@@ -8,6 +8,7 @@ import Sidebar from "./components/Sidebar";
 import Equipment from "./pages/Equipment";
 import Alerts from "./pages/Alerts";
 import Maintenance from "./pages/Maintenance";
+import Users from "./pages/Users";
 
 import "./App.css";
 
@@ -82,7 +83,9 @@ function App() {
                 <Alerts />
               ) : activePage === "Maintenance" ? (
                 <Maintenance />
-              ) : (
+              ) :
+              activePage==="Users"?(<Users/>)
+              : (
                 <div className="coming-soon">
                   <h2>{activePage}</h2>
                   <p>This module is coming soon.</p>

@@ -20,6 +20,7 @@ function Maintenance() {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [priorityFilter, setPriorityFilter] = useState("ALL");
+  const [sortBy, setSortBy] = useState("NEWEST");
 
   //Search and Filter Maintenance Tickets
   const filteredTickets = tickets.filter((ticket) => {
@@ -158,6 +159,24 @@ function Maintenance() {
       setActionLoading(false);
     }
   };
+  const sortedTickets = [...filteredTickets].sort((a, b) => {
+    if (sortBy === "NEWEST") {
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    }
+    if (sortBy === "OLDEST") {
+      return new Date(a.createdAt) - new Date(b.createdAt);
+    }
+    if (sortBy === "PRIORITY") {
+      const priorityOrder = {
+        CRITICAL: 4,
+        HIGH: 3,
+        MEDIUM: 2,
+        LOW: 1,
+      };
+      return priorityOrder[b.priority] - priorityOrder[a.priority];
+    }
+    return 0;
+  });
 
   useEffect(() => {
     fetchTickets();
@@ -204,6 +223,11 @@ function Maintenance() {
             <option value="HIGH">High</option>
             <option value="CRITICAL">Critical</option>
           </select>
+          <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+            <option value="NEWEST">Newest First</option>
+            <option value="OLDEST">Oldest First</option>
+            <option value="PRIORITY">Highest Priority</option>
+          </select>
 
           <button
             className="clear-filters-btn"
@@ -211,6 +235,7 @@ function Maintenance() {
               setSearchTerm("");
               setStatusFilter("ALL");
               setPriorityFilter("ALL");
+              setSortBy("NEWEST");
             }}
           >
             Clear Filters
@@ -284,14 +309,14 @@ function Maintenance() {
                 </thead>
 
                 <tbody>
-                  {filteredTickets.length === 0 ? (
+                  {sortedTickets.length === 0 ? (
                     <tr>
                       <td colSpan="8" className="no-data">
                         No maintenance tickets found.
                       </td>
                     </tr>
                   ) : (
-                    filteredTickets.map((ticket) => (
+                    sortedTickets.map((ticket) => (
                       <tr key={ticket.Id}>
                         <td>{ticket.ticketNumber}</td>
 
