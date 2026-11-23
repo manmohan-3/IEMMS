@@ -25,10 +25,10 @@ public class JwtService {
 		this.secretKey=Keys.hmacShaKeyFor(keyBytes);
 		this.expiration=expiration;
 	}
-	public String generateToken(String username) {
+	public String generateToken(String username, String role) {
 		Date currentTime=new Date();
 		Date expirationTime=new Date(currentTime.getTime()+expiration);
-		return Jwts.builder().subject(username).issuedAt(currentTime).expiration(expirationTime).signWith(secretKey).compact();	
+		return Jwts.builder().subject(username).claim("role", role).issuedAt(currentTime).expiration(expirationTime).signWith(secretKey).compact();	
 		
 	}
 	public String extractUsername(String token) {
@@ -42,5 +42,8 @@ public class JwtService {
 
 	private Claims extractClaims(String token) {
 	        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload();
+	}
+	public String extractRole(String token) {
+	    return extractClaims(token).get("role", String.class);
 	}
 }

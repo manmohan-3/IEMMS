@@ -8,6 +8,7 @@ import {
 import { useState, useEffect } from "react";
 import "./Alerts.css";
 
+
 function Alerts() {
   const [alerts, setAlerts] = useState([]);
   const [loading, setLoading] = useState(true);

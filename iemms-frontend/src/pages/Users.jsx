@@ -3,11 +3,13 @@
 import { getAllUsers, enableUser, disableUser } from "../services/userService";
 import { useState, useEffect } from "react";
 import "./Users.css";
+import AddUsers from "./AddUsers";
 
 function Users() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showAddUser, setShowAddUser] = useState(false);
   const fetchUsers = async () => {
     try {
       setLoading(true);
@@ -22,22 +24,19 @@ function Users() {
       setLoading(false);
     }
   };
-  const handleUserStatus=async (userId,enabled)=>{
-    try{
-        setError("");
-        if(enabled){
-            await disableUser(userId);
-        }else{
-            await enableUser(userId);
-        }
-        await fetchUsers();
-    }catch(err){
-        setError(err.resonse?.data?.message||"Unable to perform action");
+  const handleUserStatus = async (userId, enabled) => {
+    try {
+      setError("");
+      if (enabled) {
+        await disableUser(userId);
+      } else {
+        await enableUser(userId);
+      }
+      await fetchUsers();
+    } catch (err) {
+      setError(err.resonse?.data?.message || "Unable to perform action");
     }
-  }
-
-
-  
+  };
 
   useEffect(() => {
     fetchUsers();
@@ -50,6 +49,9 @@ function Users() {
           <p>Manage system users and their access permissions.</p>
         </div>
       </div>
+      <button className="add-user-btn" onClick={() => setShowAddUser(true)}>
+        + Add User
+      </button>
 
       {loading && <p>Loading users...</p>}
 
@@ -116,6 +118,12 @@ function Users() {
             </tbody>
           </table>
         </div>
+      )}
+      {showAddUser && (
+        <AddUsers
+          onClose={() => setShowAddUser(false)}
+          onUserCreated={fetchUsers}
+        />
       )}
     </div>
   );

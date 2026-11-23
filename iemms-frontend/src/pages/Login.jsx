@@ -12,6 +12,7 @@ function Login({ onLoginSuccess }) {
       const data = response.data;
       sessionStorage.setItem("token", data.token);
       sessionStorage.setItem("tokenType", data.tokenType);
+      sessionStorage.setItem("role", data.role)
       onLoginSuccess();
       console.log("Login success");
     } catch (error) {

@@ -20,11 +20,27 @@ public class AuthService {
 		this.jwtService=jwtService;
 	}
 	public LoginResponseDto login(LoginRequestDto request) {
-		Authentication authentication=authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-				request.getUsername(),request.getPassword()));
-		String username=authentication.getName();
-		String token=jwtService.generateToken(username);
-		return new LoginResponseDto(token,"Bearer",3600);
+
+	    Authentication authentication =
+	            authenticationManager.authenticate(
+	                    new UsernamePasswordAuthenticationToken(
+	                            request.getUsername(),
+	                            request.getPassword()
+	                    )
+	            );
+
+	    String username = authentication.getName();
+
+	    String role = authentication.getAuthorities()
+	            .stream()
+	            .findFirst()
+	            .orElseThrow(() -> new IllegalStateException("User role not found"))
+	            .getAuthority()
+	            .replace("ROLE_", "");
+
+	    String token = jwtService.generateToken(username, role);
+
+	    return new LoginResponseDto(token, "Bearer", 3600, role);
 	}
 
 }
