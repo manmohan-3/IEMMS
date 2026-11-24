@@ -15,6 +15,7 @@ function Login({ onLoginSuccess }) {
       sessionStorage.setItem("role", data.role)
       onLoginSuccess();
       console.log("Login success");
+      console.log(sessionStorage.getItem("token"))
     } catch (error) {
       if (error.response) {
         console.error("Login failed. HTTP status:", error.response.status);

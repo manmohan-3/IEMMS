@@ -46,11 +46,11 @@ public class ThresholdController {
 	public List<Threshold> getThreshold(@PathVariable Long equipmentId) {
 		return thresholdService.getThreshold(equipmentId);
 	}
-	@PutMapping("/{thresholdId}")
+	@PutMapping("/equipment/{equipmentId}/{thresholdId}")
 	public Threshold updateThreshold(@PathVariable Long equipmentId, @PathVariable Long thresholdId, @RequestBody @Valid ThresholdRequestDto dto) {
 		return thresholdService.updateThreshold(equipmentId,thresholdId, dto);
 	}
-	@DeleteMapping("/{thresholdId}")
+	@DeleteMapping("/equipment/{equipmentId}/{thresholdId}")
 	public String deleteThreshold(@PathVariable Long equipmentId,@PathVariable Long thresholdId) {
 		return thresholdService.deleteThreshold(equipmentId, thresholdId);
 	}

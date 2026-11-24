@@ -8,7 +8,8 @@ function Sidebar({ activePage, setActivePage, onLogout }) {
         { name: "Equipment", icon: "⚙" },
         { name: "Alerts", icon: "⚠" },
         { name: "Maintenance", icon: "🔧" },
-        { name: "Users", icon: "♙" }
+        { name: "Users", icon: "♙" },
+        {name: "Thresholds", icon: "🎚"}
     ];
 
     return (

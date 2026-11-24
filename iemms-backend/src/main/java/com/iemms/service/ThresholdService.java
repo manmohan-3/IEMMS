@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.iemms.dto.ThresholdRequestDto;
 import com.iemms.entity.Equipment;
 import com.iemms.entity.Threshold;
+import com.iemms.entity.ThresholdParameter;
 import com.iemms.repository.EquipmentRepository;
 import com.iemms.repository.ThresholdRepository;
 import com.iemms.exception.EquipmentNotFoundException;
@@ -29,9 +30,7 @@ public class ThresholdService {
 		Equipment equipment=equipmentRepository.findById(equipmentId).orElseThrow(() -> new EquipmentNotFoundException(""
 				+ "Equipment with ID "+ equipmentId+" not found"));
 		//checking whether the warning limit is greater than critical limit...
-		if(dto.getWarningLimit()>=dto.getCriticalLimit()) {
-			throw new IllegalArgumentException("Warning limit must be greater than critical limit");
-		}
+		validateThreshold(dto);
 		//checking whether the parameter for specific equipment is saved or not...
 		boolean exists=thresholdRepository.existsByEquipmentIdAndParameter(equipmentId, dto.getParameter());
 		if(exists) {
@@ -62,9 +61,7 @@ public class ThresholdService {
 		Threshold threshold=thresholdRepository.findByIdAndEquipmentId(thresholdId,equipmentId).orElseThrow(() -> new IllegalArgumentException(
 				"Threshold Id "+thresholdId+" not found for equipmentId "+equipmentId));
 		//validate the warning and critical limits
-		if(dto.getWarningLimit()>=dto.getCriticalLimit()) {
-			throw new IllegalArgumentException("Warning limit must be smaller than critical limit");
-		}
+		validateThreshold(dto);
 		//check for threshold duplication other than passed threshold...
 		boolean exists=thresholdRepository.existsByEquipmentIdAndParameterAndIdNot(equipmentId,dto.getParameter(), thresholdId);
 		if(exists) {
@@ -97,6 +94,25 @@ public class ThresholdService {
 		Threshold threshold=thresholdRepository.findById(thresholdId).orElseThrow(()->new IllegalArgumentException(""
 				+ "Threshold with ID "+thresholdId+" not found"));
 		return threshold;
+	}
+	private void validateThreshold(ThresholdRequestDto dto) {
+
+	    if (dto.getParameter() == ThresholdParameter.POWER_FACTOR) {
+
+	        if (dto.getCriticalLimit() >= dto.getWarningLimit()) {
+	            throw new IllegalArgumentException(
+	                "Critical limit must be smaller than warning limit for Power Factor"
+	            );
+	        }
+
+	    } else {
+
+	        if (dto.getWarningLimit() >= dto.getCriticalLimit()) {
+	            throw new IllegalArgumentException(
+	                "Warning limit must be smaller than critical limit"
+	            );
+	        }
+	    }
 	}
 	
 

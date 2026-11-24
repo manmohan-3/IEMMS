@@ -48,10 +48,19 @@ public class AlertService {
     			continue;
     		}
     		Alert alert=null;
-    		if(ActualValue>=threshold.getCriticalLimit()) {
-    			alert=createAlert(reading,threshold,ActualValue,threshold.getCriticalLimit(),AlertSeverity.CRITICAL);
-    		}else if(ActualValue>=threshold.getWarningLimit()) {
-    			alert=createAlert(reading,threshold,ActualValue,threshold.getWarningLimit(),AlertSeverity.WARNING);
+    		if(threshold.getParameter()==ThresholdParameter.POWER_FACTOR) {
+    			if(ActualValue<=threshold.getCriticalLimit()) {
+    				alert=createAlert(reading,threshold,ActualValue,threshold.getCriticalLimit(),AlertSeverity.CRITICAL);
+    			}else if(ActualValue<=threshold.getWarningLimit()) {
+    				alert=createAlert(reading,threshold,ActualValue,threshold.getWarningLimit(),AlertSeverity.WARNING);
+    			}
+    		}
+    		else {
+    			if(ActualValue>=threshold.getCriticalLimit()) {
+        			alert=createAlert(reading,threshold,ActualValue,threshold.getCriticalLimit(),AlertSeverity.CRITICAL);
+        		}else if(ActualValue>=threshold.getWarningLimit()) {
+        			alert=createAlert(reading,threshold,ActualValue,threshold.getWarningLimit(),AlertSeverity.WARNING);
+        		}
     		}
     		if(alert!=null) {
     			generatedAlerts.add(alertRepository.save(alert));
@@ -150,4 +159,5 @@ public class AlertService {
     	Alert updateAlert=alertRepository.save(alert);
     	return convertToDto(updateAlert);
     }
+    
 }

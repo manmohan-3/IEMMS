@@ -9,6 +9,7 @@ import Equipment from "./pages/Equipment";
 import Alerts from "./pages/Alerts";
 import Maintenance from "./pages/Maintenance";
 import Users from "./pages/Users";
+import Threshold from "./pages/Threshold";
 
 import "./App.css";
 
@@ -85,6 +86,7 @@ function App() {
                 <Maintenance />
               ) :
               activePage==="Users"?(<Users/>)
+              :activePage==="Thresholds"?(<Threshold/>)
               : (
                 <div className="coming-soon">
                   <h2>{activePage}</h2>
