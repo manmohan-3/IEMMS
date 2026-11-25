@@ -384,3 +384,39 @@
         min-width: 0;
     }
 }
+/* Add Threshold Button */
+
+.add-threshold-btn {
+    padding: 11px 20px;
+
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    border: 1px solid #3b82f6;
+    border-radius: 8px;
+
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+    white-space: nowrap;
+
+    transition: all 0.2s ease;
+}
+
+.add-threshold-btn:hover {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+    transform: translateY(-2px);
+}
+
+.add-threshold-btn:active {
+    transform: scale(0.97);
+}
+
+@media (max-width: 600px) {
+    .threshold-header {
+        align-items: flex-start;
+        gap: 15px;
+        flex-direction: column;
+    }
+}

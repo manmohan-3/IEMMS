@@ -2,6 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { getAllThresholds } from "../services/thresholdService";
+import AddThreshold from "./AddThreshold";
+import EditThreshold from "./EditThreshold";
+import {
+  deleteThreshold
+} from "../services/thresholdService";
 import "./Threshold.css";
 
 function Threshold() {
@@ -13,6 +18,8 @@ function Threshold() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedEquipment, setSelectedEquipment] = useState("ALL");
   const [selectedParameter, setSelectedParameter] = useState("ALL");
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [selectedThreshold, setSelectedThreshold] = useState(null);
 
   // Fetch all thresholds
   const fetchThresholds = async () => {
@@ -27,6 +34,27 @@ function Threshold() {
       setError("Failed to load thresholds.");
     } finally {
       setLoading(false);
+    }
+  };
+  const handleDeleteThreshold = async (threshold) => {
+    const confirmDelete = window.confirm(
+      `Are you sure you want to delete the ${threshold.parameter} threshold for ${threshold.equipment.equipmentCode}?`,
+    );
+
+    if (!confirmDelete) {
+      return;
+    }
+
+    try {
+      await deleteThreshold(threshold.equipment.Id, threshold.Id);
+
+      alert("Threshold deleted successfully!");
+
+      await fetchThresholds();
+    } catch (error) {
+      console.error("Error deleting threshold:", error);
+
+      alert(error.response?.data?.message || "Failed to delete threshold.");
     }
   };
 
@@ -86,8 +114,14 @@ function Threshold() {
           <h1>Threshold Management</h1>
           <p>Configure equipment parameter limits.</p>
         </div>
-      </div>
 
+        <button
+          className="add-threshold-btn"
+          onClick={() => setShowAddModal(true)}
+        >
+          + Add Threshold
+        </button>
+      </div>
       {/* Summary Cards */}
 
       <div className="threshold-summary">
@@ -198,9 +232,14 @@ function Threshold() {
                     <td>{threshold.criticalLimit}</td>
 
                     <td>
-                      <button className="threshold-edit-btn">Edit</button>
+                      <button
+                        className="threshold-edit-btn"
+                        onClick={() => setSelectedThreshold(threshold)}
+                      >
+                        Edit
+                      </button>
 
-                      <button className="threshold-delete-btn">Delete</button>
+                      <button className="threshold-delete-btn" onClick={() => handleDeleteThreshold(threshold)}>Delete</button>
                     </td>
                   </tr>
                 ))
@@ -208,6 +247,19 @@ function Threshold() {
             </tbody>
           </table>
         </div>
+      )}
+      {showAddModal && (
+        <AddThreshold
+          onClose={() => setShowAddModal(false)}
+          onThresholdAdded={fetchThresholds}
+        />
+      )}
+      {selectedThreshold && (
+        <EditThreshold
+          threshold={selectedThreshold}
+          onClose={() => setSelectedThreshold(null)}
+          onThresholdUpdated={fetchThresholds}
+        />
       )}
     </div>
   );

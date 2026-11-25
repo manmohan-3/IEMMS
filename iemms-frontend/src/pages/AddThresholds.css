@@ -1,0 +1,356 @@
+/* =====================================
+   ADD THRESHOLD OVERLAY
+===================================== */
+
+.add-threshold-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(2, 6, 23, 0.78);
+    backdrop-filter: blur(4px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1000;
+    padding: 20px;
+}
+
+
+/* =====================================
+   MODAL CONTAINER
+===================================== */
+
+.add-threshold-modal {
+    width: 100%;
+    max-width: 520px;
+    max-height: 90vh;
+    overflow-y: auto;
+
+    background: #111827;
+    border: 1px solid #334155;
+    border-radius: 14px;
+
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+
+    animation: thresholdModalOpen 0.25s ease;
+}
+
+@keyframes thresholdModalOpen {
+    from {
+        opacity: 0;
+        transform: translateY(15px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+/* =====================================
+   MODAL HEADER
+===================================== */
+
+.add-threshold-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 22px 25px;
+
+    background: linear-gradient(135deg, #172c4b, #111827);
+    border-bottom: 1px solid #29364a;
+}
+
+.add-threshold-header h2 {
+    color: #f8fafc;
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 7px;
+}
+
+.add-threshold-header p {
+    color: #94a3b8;
+    font-size: 13px;
+    margin: 0;
+}
+
+
+/* Close Button */
+
+.threshold-close-btn {
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 7px;
+
+    color: #f87171;
+    font-size: 23px;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.threshold-close-btn:hover {
+    background: #dc2626;
+    color: white;
+    border-color: #dc2626;
+}
+
+
+/* =====================================
+   FORM
+===================================== */
+
+.add-threshold-form {
+    padding: 24px 25px;
+}
+
+.threshold-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    margin-bottom: 19px;
+}
+
+.threshold-form-group label {
+    color: #cbd5e1;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.threshold-form-group input,
+.threshold-form-group select {
+    width: 100%;
+    height: 43px;
+
+    padding: 0 13px;
+
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 7px;
+
+    color: #e2e8f0;
+    font-size: 13px;
+    font-family: inherit;
+
+    outline: none;
+    box-sizing: border-box;
+
+    transition: all 0.2s ease;
+}
+
+.threshold-form-group input::placeholder {
+    color: #64748b;
+}
+
+.threshold-form-group select {
+    cursor: pointer;
+}
+
+.threshold-form-group select option {
+    background: #111827;
+    color: #e2e8f0;
+}
+
+.threshold-form-group input:focus,
+.threshold-form-group select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.13);
+}
+
+.threshold-form-group input:disabled,
+.threshold-form-group select:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+
+/* =====================================
+   INFORMATION MESSAGE
+===================================== */
+
+.threshold-info {
+    padding: 12px 14px;
+    margin-bottom: 20px;
+
+    background: rgba(6, 182, 212, 0.09);
+    border: 1px solid rgba(6, 182, 212, 0.3);
+    border-left: 3px solid #06b6d4;
+    border-radius: 7px;
+
+    color: #67e8f9;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+
+/* =====================================
+   ERROR MESSAGE
+===================================== */
+
+.add-threshold-error {
+    padding: 12px 14px;
+    margin-bottom: 18px;
+
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    border-left: 3px solid #ef4444;
+    border-radius: 7px;
+
+    color: #fca5a5;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+
+/* =====================================
+   ACTION BUTTONS
+===================================== */
+
+.add-threshold-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+
+    padding-top: 20px;
+    margin-top: 8px;
+
+    border-top: 1px solid #263244;
+}
+
+
+/* Cancel Button */
+
+.cancel-threshold-btn {
+    padding: 10px 20px;
+
+    background: #1e293b;
+    border: 1px solid #475569;
+    border-radius: 7px;
+
+    color: #cbd5e1;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cancel-threshold-btn:hover {
+    background: #334155;
+    color: #ffffff;
+}
+
+
+/* Create Button */
+
+.create-threshold-btn {
+    padding: 10px 20px;
+
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    border: 1px solid #3b82f6;
+    border-radius: 7px;
+
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.create-threshold-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+    transform: translateY(-1px);
+}
+
+.create-threshold-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+
+/* =====================================
+   RESPONSIVE DESIGN
+===================================== */
+
+@media (max-width: 600px) {
+
+    .add-threshold-overlay {
+        padding: 12px;
+    }
+
+    .add-threshold-modal {
+        max-height: 95vh;
+    }
+
+    .add-threshold-header {
+        padding: 18px;
+    }
+
+    .add-threshold-form {
+        padding: 20px 18px;
+    }
+
+    .add-threshold-actions {
+        flex-direction: column-reverse;
+    }
+
+    .cancel-threshold-btn,
+    .create-threshold-btn {
+        width: 100%;
+    }
+}
+
+
+/* Accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+    .add-threshold-modal {
+        animation: none;
+    }
+
+    .threshold-card,
+    .threshold-close-btn,
+    .create-threshold-btn {
+        transition: none;
+    }
+}
+.add-threshold-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 0 5px;
+    margin-top: 15px;
+    border-top: 1px solid #263244;
+}
+
+.create-threshold-btn {
+    display: inline-block;
+    min-width: 145px;
+    padding: 12px 20px;
+    background: #2563eb;
+    border: 1px solid #3b82f6;
+    border-radius: 7px;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.create-threshold-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
